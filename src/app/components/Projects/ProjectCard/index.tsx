@@ -28,7 +28,7 @@ export default function ProjectCard({ demo, link, thumbnail, title, description 
 
         const element = ref.current;
         if (element) {
-            element.addEventListener('mouseenter', handleMouseEnter);
+            element.addEventListener('mouseenter', handleMouseEnter, { passive: true });
         }
 
         return () => {
@@ -51,7 +51,7 @@ export default function ProjectCard({ demo, link, thumbnail, title, description 
 
         const element = ref.current;
         if (element) {
-            element.addEventListener('mouseleave', handleMouseLeave);
+            element.addEventListener('mouseleave', handleMouseLeave, { passive: true });
         }
 
         return () => {

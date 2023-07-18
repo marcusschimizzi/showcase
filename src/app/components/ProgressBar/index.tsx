@@ -23,7 +23,7 @@ export default function ProgressBar() {
             }
         }
 
-        window.addEventListener('scroll', updateScroll);
+        window.addEventListener('scroll', updateScroll, { passive: true });
         return () => window.removeEventListener('scroll', updateScroll);
     }, []);
 

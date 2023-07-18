@@ -31,6 +31,7 @@ class Orb {
             debounce(() => {
                 this.bounds = this.setBounds();
             }, 250),
+            { passive: true },
         );
     }
 
