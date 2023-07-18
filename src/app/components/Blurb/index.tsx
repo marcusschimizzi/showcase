@@ -32,7 +32,6 @@ export default function Blurb() {
     };
 
     useEffect(() => {
-        console.info('inView', inView);
         if (inView) {
             control.start('visible');
         }
