@@ -1,0 +1,32 @@
+.links a {
+    position: relative;
+    padding: 0 1rem;
+    transition: color 0.2s ease;
+    color: #a5a5a5;
+}
+
+.links a svg {
+    will-change: transform;
+    transition: transform 600ms ease;
+}
+
+.links a:hover svg {
+    transition: transform 150ms ease;
+    transform: translateY(-0.5rem);
+}
+
+#linkedin:hover {
+    color: #0077b5;
+}
+
+#github:hover {
+    color: #6e5494;
+}
+
+#facebook:hover {
+    color: #4267b2;
+}
+
+#email:hover {
+    color: #c13584;
+}

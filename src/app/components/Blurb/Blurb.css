@@ -1,0 +1,13 @@
+.qualtrics {
+    background-image: linear-gradient(90deg, #21dbaa, #00b4ef, #0768dd, #5f1ae5);
+    background-size: 100%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    -moz-background-clip: text;
+    -moz-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.qualtrics:hover {
+    text-decoration: underline;
+}

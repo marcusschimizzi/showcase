@@ -1,0 +1,23 @@
+.logo {
+    margin: 0 0 0.25rem;
+    height: 32px;
+    width: 32px;
+}
+
+.gradient {
+    background-clip: text;
+    background-image: linear-gradient(160deg, #1f5abd 0, #8910a8 100%);
+    display: inline-block;
+    padding-bottom: 1rem;
+    position: relative;
+    -webkit-text-fill-color: transparent;
+    text-fill-color: transparent;
+    z-index: 2;
+}
+
+@media screen and (min-width: 1024px) {
+    .logo {
+        height: 64px;
+        width: 64px;
+    }
+}
