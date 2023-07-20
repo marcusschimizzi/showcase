@@ -5,6 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowUpRightFromSquare } from '@fortawesome/free-solid-svg-icons';
 import { motion, useAnimation, useInView } from 'framer-motion';
 import ProjectCard from './ProjectCard';
+import styled from 'styled-components';
 
 const projects = [
     {
@@ -30,7 +31,7 @@ const projects = [
     },
     {
         title: 'Quick Trigger Kennels',
-        description: 'A full website for a freelance client, including a custom-built backend CMS.',
+        description: 'A full business website for a freelance client.',
         thumbnail: '/qtk.png',
         demo: '/qtk.mov',
         link: 'https://quicktriggerkennels.com',
@@ -61,6 +62,23 @@ const variants = {
     },
 };
 
+const StyledViewMore = styled.a`
+    color: ${({ theme }) => theme.colors.text3};
+
+    &:hover {
+        color: ${({ theme }) => theme.colors.main2};
+    }
+`;
+
+const StyledProjects = styled.section`
+    background-color: ${({ theme }) => theme.colors.background2};
+    color: ${({ theme }) => theme.colors.text3};
+`;
+
+const StyledHeader = styled.h1`
+    color: ${({ theme }) => theme.colors.text1};
+`;
+
 export default function Projects({}) {
     const sectionRef = useRef(null);
     const controls = useAnimation();
@@ -73,8 +91,8 @@ export default function Projects({}) {
     }, [controls, inView]);
 
     return (
-        <section className="bg-[#151a1e] text-center py-16 sm:py-20 md:py-32" ref={sectionRef}>
-            <h1 className="text-gray-50 text-5xl">Some stuff I&apos;ve built</h1>
+        <StyledProjects className="text-center py-16 sm:py-20 md:py-32" ref={sectionRef}>
+            <StyledHeader className="text-5xl">Some stuff I&apos;ve built</StyledHeader>
             <motion.ul
                 className="pt-12 grid max-w-[26rem] sm:max-w-[52.5rem] grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 mx-auto gap-6 lg:gap-y-8 xl:gap-x-8 lg:max-w-7xl px-4 sm:px-6 lg:px-8"
                 variants={containerVariants}
@@ -95,12 +113,12 @@ export default function Projects({}) {
                 ))}
             </motion.ul>
             <div className="pt-12">
-                <a href="https://github.com/schimizzimj" target="_blank" className="group">
-                    <h2 className="text-xl md:text-3xl text-gray-500 group-hover:text-[#8910a8] font-sans font-semibold">
+                <StyledViewMore href="https://github.com/schimizzimj" target="_blank" className="group">
+                    <h2 className="text-xl md:text-3xl font-sans font-semibold">
                         View More <FontAwesomeIcon icon={faArrowUpRightFromSquare} />
                     </h2>
-                </a>
+                </StyledViewMore>
             </div>
-        </section>
+        </StyledProjects>
     );
 }

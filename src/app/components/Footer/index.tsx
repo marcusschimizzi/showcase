@@ -4,11 +4,17 @@ import Image from 'next/image';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHeart, faCoffee, faCopyright } from '@fortawesome/free-solid-svg-icons';
 import { motion } from 'framer-motion';
+import styled from 'styled-components';
 import SocialMedia from '../SocialMedia';
+
+const StyledFooter = styled.footer`
+    background-color: ${({ theme }) => theme.colors.background1};
+    color: ${({ theme }) => theme.colors.text2};
+`;
 
 export default function Footer() {
     return (
-        <footer className="bg-[#151a1e] pt-12 pw-6 pb-24 text-center">
+        <StyledFooter className="pt-12 pw-6 pb-24 text-center">
             <motion.div
                 className="mx-auto relative w-auto"
                 initial={{ opacity: 0, y: 100 }}
@@ -28,13 +34,13 @@ export default function Footer() {
                 </a>
                 <div className="md:flex justify-center -mw-3 mt-2">
                     <div className="block p-3 md:w-1/3">
-                        <h1 className="text-xl lg:text-3xl font-semibold text-gray-50">Marcus J. Schimizzi</h1>
+                        <h1 className="text-xl lg:text-3xl font-semibold">Marcus J. Schimizzi</h1>
                     </div>
                 </div>
                 <div className="mt-3">
-                    <SocialMedia />
+                    <SocialMedia align="center" />
                 </div>
-                <div className="mt-3 text-gray-100">
+                <div className="mt-3">
                     <p>
                         Made by me with <FontAwesomeIcon className="text-[#b51442] align-middle" icon={faHeart} />
                     </p>
@@ -49,6 +55,6 @@ export default function Footer() {
                     </p>
                 </div>
             </motion.div>
-        </footer>
+        </StyledFooter>
     );
 }

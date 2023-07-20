@@ -2,6 +2,7 @@
 import Image from 'next/image';
 import { useEffect, useRef } from 'react';
 import { motion, useAnimation, useInView } from 'framer-motion';
+import styled from 'styled-components';
 
 interface Role {
     institution: string;
@@ -41,6 +42,31 @@ const containerVariants = {
     },
 };
 
+const StyledRole = styled.div`
+    color: ${({ theme }) => theme.colors.text2};
+`;
+
+const StyledRoleTitle = styled.div`
+    color: ${({ theme }) => theme.colors.text1};
+`;
+
+const StyledTimeline = styled.div`
+    background-color: ${({ theme }) => theme.colors.text1};
+`;
+
+const StyledImageOuterWrapper = styled.div`
+    width: 65px;
+    height: 65px;
+`;
+
+const StyledImageInnerWrapper = styled.div`
+    background-color: ${({ theme }) => theme.colors.text1};
+`;
+
+const StyledImage = styled(Image)`
+    color: transparent;
+`;
+
 export default function Timeline({ title, roles }: TimelineProps) {
     const sectionRef = useRef(null);
     const controls = useAnimation();
@@ -65,39 +91,30 @@ export default function Timeline({ title, roles }: TimelineProps) {
                 <motion.div key={index} variants={variants}>
                     <div className="flex min-h-[200px] font-sans pb-2">
                         <div className="flex flex-col">
-                            <div
-                                className="relative overflow-hidden rounded-md bg-black"
-                                style={{
-                                    width: '65px',
-                                    height: '65px',
-                                }}
-                            >
-                                <div className="w-full overflow-hidden rounded-[3px] bg-gray-50">
-                                    <Image
+                            <StyledImageOuterWrapper className="relative overflow-hidden rounded-md">
+                                <StyledImageInnerWrapper className="w-full overflow-hidden rounded-[3px]">
+                                    <StyledImage
                                         src={role.image}
                                         alt={role.institution}
                                         width={65}
                                         height={65}
                                         className="absolute h-full w-full aspect-square"
-                                        style={{
-                                            color: 'transparent',
-                                        }}
                                     />
-                                </div>
-                            </div>
-                            <div className="mt-2 w-px grow self-center bg-gray-200"></div>
+                                </StyledImageInnerWrapper>
+                            </StyledImageOuterWrapper>
+                            <StyledTimeline className="mt-2 w-px grow self-center"></StyledTimeline>
                         </div>
-                        <div className="flex-initial pl-4">
-                            <div className="font-bold text-white">{role.institution}</div>
-                            <div className="text-gray-400 text-sm">
+                        <StyledRole className="flex-initial pl-4">
+                            <StyledRoleTitle className="font-bold">{role.institution}</StyledRoleTitle>
+                            <div className="text-sm">
                                 <span>
                                     {role.role}
                                     <span className="mx-1">●</span>
                                 </span>
                                 {role.startDate} - {role.endDate}
                             </div>
-                            <div className="pb-5 pt-3 font-serif text-gray-100">{role.description}</div>
-                        </div>
+                            <div className="pb-5 pt-3 font-serif">{role.description}</div>
+                        </StyledRole>
                     </div>
                 </motion.div>
             ))}

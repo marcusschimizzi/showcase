@@ -1,5 +1,9 @@
 import Image from 'next/image';
 import { useEffect, useRef } from 'react';
+import styled from 'styled-components';
+import { rgba } from 'polished';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faExternalLink } from '@fortawesome/free-solid-svg-icons';
 
 interface ProjectCardProps {
     demo: string;
@@ -8,6 +12,33 @@ interface ProjectCardProps {
     title: string;
     description: string;
 }
+
+const StyledProjectCard = styled.li`
+    background-color: ${({ theme }) => theme.colors.background3};
+
+    &:hover {
+        background-color: ${({ theme }) => rgba(theme.colors.background3, 0.5)};
+    }
+
+    &.group {
+        .hovered-video {
+            opacity: 0;
+            transition: opacity 0.5s linear 0s;
+        }
+    }
+`;
+
+const StyledCardTitle = styled.h2`
+    color: ${({ theme }) => theme.colors.text1};
+
+    &:hover {
+        color: ${({ theme }) => theme.colors.main1};
+    }
+`;
+
+const StyledCardDescription = styled.p`
+    color: ${({ theme }) => theme.colors.text2};
+`;
 
 export default function ProjectCard({ demo, link, thumbnail, title, description }: ProjectCardProps) {
     const ref = useRef<HTMLLIElement>(null);
@@ -62,11 +93,8 @@ export default function ProjectCard({ demo, link, thumbnail, title, description 
     }, []);
 
     return (
-        <li
-            className="group relative rounded-3xl bg-slate-50 p-6 dark:bg-slate-800/80 dark:highlight-white/5 hover:bg-slate-100 dark:hover:bg-slate-700/50"
-            ref={ref}
-        >
-            <div className="aspect-[2688/1372] relative rounded-md transform overflow-hidden shadow-[0_2px_8px_rgba(15,23,42,0.08)] bg-slate-200 dark:bg-slate-700">
+        <StyledProjectCard className="group relative rounded-3xl p-6" ref={ref}>
+            <div className="aspect-[2688/1372] relative rounded-md transform overflow-hidden shadow-[0_2px_8px_rgba(15,23,42,0.08)]">
                 <Image
                     className="absolute inset-0 w-full h-full"
                     src={thumbnail}
@@ -86,27 +114,15 @@ export default function ProjectCard({ demo, link, thumbnail, title, description 
             </div>
             <div className="flex flex-wrap flex-col items-start mt-6 text-left">
                 <div className="flex flex-row">
-                    <h2 className="text-sm leading-6 text-slate-900 dark:text-white font-semibold group-hover:text-sky-500 dark:group-hover:text-sky-400">
+                    <StyledCardTitle className="text-sm leading-6 font-semibold">
                         <a href={link}>
                             {title}
-                            <svg
-                                className="w-6 h-6 flex-none opacity-0 group-hover:opacity-100 inline"
-                                viewBox="0 0 24 24"
-                                fill="none"
-                            >
-                                <path
-                                    d="M9.75 15.25L15.25 9.75M15.25 9.75H10.85M15.25 9.75V14.15"
-                                    stroke="#0EA5E9"
-                                    strokeWidth="1.5"
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                ></path>
-                            </svg>
+                            <FontAwesomeIcon icon={faExternalLink} className="ml-2" />
                         </a>
-                    </h2>
+                    </StyledCardTitle>
                 </div>
-                <p className="text-[0.8125rem] leading-6 text-slate-500 dark:text-slate-400">{description}</p>
+                <StyledCardDescription className="text-[0.8125rem] leading-6">{description}</StyledCardDescription>
             </div>
-        </li>
+        </StyledProjectCard>
     );
 }

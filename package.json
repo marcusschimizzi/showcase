@@ -25,6 +25,7 @@
         "hsl-to-hex": "^1.0.0",
         "next": "13.4.10",
         "pixi.js": "^7.2.4",
+        "polished": "^4.2.2",
         "postcss": "8.4.26",
         "react": "18.2.0",
         "react-dom": "18.2.0",
