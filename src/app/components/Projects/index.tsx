@@ -23,10 +23,17 @@ const projects = [
     },
     {
         title: 'Perception Website',
-        description: 'A homepage for a freelance client.',
+        description: 'A homepage for a web management freelance client.',
         thumbnail: '/perception.png',
         demo: '/perception.mov',
         link: 'https://perception.net',
+    },
+    {
+        title: 'Quick Trigger Kennels',
+        description: 'A full website for a freelance client, including a custom-built backend CMS.',
+        thumbnail: '/qtk.png',
+        demo: '/qtk.mov',
+        link: 'https://quicktriggerkennels.com',
     },
 ];
 

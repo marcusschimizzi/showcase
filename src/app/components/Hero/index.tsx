@@ -2,11 +2,36 @@
 
 import Image from 'next/image';
 import { motion } from 'framer-motion';
-import './hero.css';
 import SocialMedia from '../SocialMedia';
 import Blobs from '../Blobs';
+import styled, { useTheme } from 'styled-components';
+
+const GradientSpan = styled.span<{ $color1: string; $color2: string; $color3: string }>`
+    background-clip: text;
+    background-image: ${(props) =>
+        `linear-gradient(160deg, ${props.$color1} 0, ${props.$color2} 50%, ${props.$color3} 100%)`};
+    display: inline-block;
+    padding-bottom: 1rem;
+    position: relative;
+    -webkit-text-fill-color: transparent;
+    -webkit-background-clip: text;
+    z-index: 2;
+`;
+
+const StyledLogo = styled(motion.div)`
+    margin: 0 0 0.25rem;
+    height: 32px;
+    width: 32px;
+
+    @media screen and (min-width: 1024px) {
+        height: 64px;
+        width: 64px;
+    }
+`;
 
 export default function Hero() {
+    const { colors } = useTheme();
+
     const containerVariants = {
         hidden: {},
         visible: {
@@ -31,9 +56,15 @@ export default function Hero() {
         },
     };
 
+    function convertToNumber(str: string) {
+        return parseInt(str.replace(/^#/, ''), 16);
+    }
+
+    const colorsAsNumbers = [colors.main1, colors.main2, colors.main3].map((color) => convertToNumber(color));
+
     return (
         <section className="min-h-screen items-stretch flex flex-col justify-between bg-[#070b0d]">
-            <Blobs />
+            <Blobs colors={colorsAsNumbers} />
             <div className="grow shrink-0 p-12 flex items-center">
                 <div className="relative w-auto m-auto grow shrink">
                     <div className="-mx-3 -mt-3 last:-mb-3 justify-center md:flex">
@@ -43,27 +74,28 @@ export default function Hero() {
                             initial="hidden"
                             animate="visible"
                         >
-                            <motion.div className="logo block relative mb-3" variants={childrenVariants}>
+                            <StyledLogo className="block relative mb-3" variants={childrenVariants}>
                                 <Image
                                     className="block h-auto w-full"
                                     src="/logo-gradient.svg"
                                     alt="m logo"
                                     width={12}
                                     height={12}
+                                    priority
                                 />
-                            </motion.div>
+                            </StyledLogo>
                             <motion.h1
                                 className="text-white text-opacity-80 text-3xl lg:text-5xl font-bold"
                                 variants={childrenVariants}
                             >
                                 Hi, I&apos;m Marcus. <br />
-                                <span className="gradient">
+                                <GradientSpan $color1={colors.main1} $color2={colors.main2} $color3={colors.main3}>
                                     Software developer,
                                     <br />
                                     travel enthusiast,
                                     <br />
                                     and avid policy wonk too.
-                                </span>
+                                </GradientSpan>
                             </motion.h1>
                             <motion.div variants={childrenVariants}>
                                 <SocialMedia />

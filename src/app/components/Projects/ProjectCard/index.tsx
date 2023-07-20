@@ -84,24 +84,26 @@ export default function ProjectCard({ demo, link, thumbnail, title, description 
                     </video>
                 </div>
             </div>
-            <div className="flex flex-wrap flex-col items-start mt-6">
+            <div className="flex flex-wrap flex-col items-start mt-6 text-left">
                 <div className="flex flex-row">
                     <h2 className="text-sm leading-6 text-slate-900 dark:text-white font-semibold group-hover:text-sky-500 dark:group-hover:text-sky-400">
-                        <a href={link}>{title} </a>
+                        <a href={link}>
+                            {title}
+                            <svg
+                                className="w-6 h-6 flex-none opacity-0 group-hover:opacity-100 inline"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                            >
+                                <path
+                                    d="M9.75 15.25L15.25 9.75M15.25 9.75H10.85M15.25 9.75V14.15"
+                                    stroke="#0EA5E9"
+                                    strokeWidth="1.5"
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                ></path>
+                            </svg>
+                        </a>
                     </h2>
-                    <svg
-                        className="w-6 h-6 flex-none opacity-0 group-hover:opacity-100"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                    >
-                        <path
-                            d="M9.75 15.25L15.25 9.75M15.25 9.75H10.85M15.25 9.75V14.15"
-                            stroke="#0EA5E9"
-                            strokeWidth="1.5"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                        ></path>
-                    </svg>
                 </div>
                 <p className="text-[0.8125rem] leading-6 text-slate-500 dark:text-slate-400">{description}</p>
             </div>

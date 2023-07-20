@@ -7,9 +7,12 @@ import { scaledRandom } from '../../utils/utils';
 import './Blobs.css';
 import { useEffect } from 'react';
 
-export default function Blobs() {
+interface BlobsProps {
+    colors: number[];
+}
+
+export default function Blobs({ colors }: BlobsProps) {
     useEffect(() => {
-        const colors = [0x1f5abd, 0x5435b3, 0x8910a8];
         const app = new PIXI.Application({
             view: document.getElementById('blobs-canvas') as HTMLCanvasElement,
             resizeTo: window,
