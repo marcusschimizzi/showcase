@@ -5,6 +5,7 @@ import { ThemeContext } from '@/app/ThemeProvider';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMoon, faSun } from '@fortawesome/free-solid-svg-icons';
 import { motion } from 'framer-motion';
+import ScrollLink from '../ScrollLink';
 
 const StyledNav = styled.nav`
     align-items: center;
@@ -24,7 +25,19 @@ const StyledList = styled.ul`
     justify-content: flex-end;
     list-style: none;
     margin: 0;
-    padding: 0 1rem;
+    padding: 0 2rem;
+`;
+
+const StyledListItem = styled.li`
+    margin: 0 1rem;
+`;
+
+const StyledLink = styled(ScrollLink)`
+    color: ${({ theme }) => theme.colors.text2};
+
+    &:hover {
+        color: ${({ theme }) => theme.colors.accent2};
+    }
 `;
 
 const StyledButton = styled.button`
@@ -35,6 +48,7 @@ const StyledButton = styled.button`
     font-size: inherit;
     font-weight: inherit;
     padding: 0;
+    padding-left: 4rem;
 `;
 
 const MotionIcon = motion(FontAwesomeIcon);
@@ -45,6 +59,18 @@ export default function Nav() {
     return (
         <StyledNav>
             <StyledList>
+                <StyledListItem>
+                    <StyledLink id="about">About</StyledLink>
+                </StyledListItem>
+                <StyledListItem>
+                    <StyledLink id="projects">Projects</StyledLink>
+                </StyledListItem>
+                <StyledListItem>
+                    <StyledLink id="experience">Experience</StyledLink>
+                </StyledListItem>
+                <StyledListItem>
+                    <StyledLink id="contact">Contact</StyledLink>
+                </StyledListItem>
                 <StyledButton onClick={toggleTheme} aria-label="Toggle theme" title="Toggle theme">
                     <MotionIcon
                         color={theme.colors.text2}

@@ -32,7 +32,7 @@ const StyledCardTitle = styled.h2`
     color: ${({ theme }) => theme.colors.text1};
 
     &:hover {
-        color: ${({ theme }) => theme.colors.main1};
+        color: ${({ theme }) => theme.colors.accent2};
     }
 `;
 

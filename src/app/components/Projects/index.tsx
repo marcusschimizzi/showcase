@@ -66,7 +66,7 @@ const StyledViewMore = styled.a`
     color: ${({ theme }) => theme.colors.text3};
 
     &:hover {
-        color: ${({ theme }) => theme.colors.main2};
+        color: ${({ theme }) => theme.colors.accent3};
     }
 `;
 
@@ -91,7 +91,7 @@ export default function Projects({}) {
     }, [controls, inView]);
 
     return (
-        <StyledProjects className="text-center py-16 sm:py-20 md:py-32" ref={sectionRef}>
+        <StyledProjects className="text-center py-16 sm:py-20 md:py-32" ref={sectionRef} id="projects">
             <StyledHeader className="text-5xl">Some stuff I&apos;ve built</StyledHeader>
             <motion.ul
                 className="pt-12 grid max-w-[26rem] sm:max-w-[52.5rem] grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 mx-auto gap-6 lg:gap-y-8 xl:gap-x-8 lg:max-w-7xl px-4 sm:px-6 lg:px-8"

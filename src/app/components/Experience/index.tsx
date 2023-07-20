@@ -14,7 +14,10 @@ const StyledExperience = styled.div`
 
 export default function Experience({ work, education }: ExperienceProps) {
     return (
-        <StyledExperience className="flex flex-col gap-4 py-16 md:flex-row justify-center items-center md:items-start">
+        <StyledExperience
+            className="flex flex-col gap-4 py-16 md:flex-row justify-center items-center md:items-start"
+            id="experience"
+        >
             <Timeline title={work.title} roles={work.roles} />
             <Timeline title={education.title} roles={education.roles} />
         </StyledExperience>
