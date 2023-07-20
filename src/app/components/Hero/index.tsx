@@ -32,8 +32,6 @@ const StyledLogo = styled(motion.div)`
 export default function Hero() {
     const { colors } = useTheme();
 
-    console.info(colors);
-
     const containerVariants = {
         hidden: {},
         visible: {

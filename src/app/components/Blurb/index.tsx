@@ -1,11 +1,30 @@
 'use client';
 
-import { useEffect, useRef } from 'react';
-import Image from 'next/image';
+import { useContext, useEffect, useRef } from 'react';
 import { motion, useAnimation, useInView } from 'framer-motion';
-import './Blurb.css';
+import styled, { useTheme } from 'styled-components';
+
+const QualtricsText = styled.strong`
+    background-image: linear-gradient(90deg, #21dbaa, #00b4ef, #0768dd, #5f1ae5);
+    background-size: 100%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    -moz-background-clip: text;
+    -moz-text-fill-color: transparent;
+    background-clip: text;
+
+    &:hover {
+        text-decoration: underline;
+    }
+`;
+
+const StyledBlurb = styled.section<{ $background: string; $text: string }>`
+    background-color: ${(props) => props.$background};
+    color: ${(props) => props.$text};
+`;
 
 export default function Blurb() {
+    const { colors } = useTheme();
     const sectionRef = useRef<HTMLDivElement>(null);
     const control = useAnimation();
     const inView = useInView(sectionRef, { once: true, amount: 0.5 });
@@ -38,7 +57,7 @@ export default function Blurb() {
     }, [control, inView]);
 
     return (
-        <section className="bg-[#070b0d] text-gray-50 py-12" ref={sectionRef}>
+        <StyledBlurb $background={colors.background1} $text={colors.text} className="py-12" ref={sectionRef}>
             <motion.div
                 className="mx-auto flex flex-col md:flex-row items-center justify-between md:justify-around w-100 md:w-9/12 pt-3 md:py-0"
                 variants={containerVariants}
@@ -46,12 +65,13 @@ export default function Blurb() {
                 animate={control}
             >
                 <motion.div
-                    className="w-[256px] px-3 md:px-6 border-4 border-gray-50 aspect-square rounded-full overflow-hidden mb-12 md:mb-0"
+                    className="w-[256px] px-3 md:px-6 border-4 aspect-square rounded-full overflow-hidden mb-12 md:mb-0"
                     variants={childrenVariants}
                     style={{
                         backgroundImage: 'url(/portrait.png)',
                         backgroundSize: 'cover',
                         backgroundPosition: 'center',
+                        borderColor: colors.accent1,
                     }}
                 ></motion.div>
                 <motion.div
@@ -63,13 +83,13 @@ export default function Blurb() {
                     <p>
                         I&apos;m a full-stack software developer (although I&apos;ve been doing a lot of front end
                         lately) especially interested in data visualization. I&apos;m currently working for{' '}
-                        <strong className="qualtrics">
+                        <QualtricsText className="qualtrics">
                             <a href="https://www.qualtrics.com">Qualtrics</a>
-                        </strong>{' '}
+                        </QualtricsText>{' '}
                         on their data visualization team.
                     </p>
                 </motion.div>
             </motion.div>
-        </section>
+        </StyledBlurb>
     );
 }
