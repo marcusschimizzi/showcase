@@ -32,6 +32,8 @@ const StyledLogo = styled(motion.div)`
 export default function Hero() {
     const { colors } = useTheme();
 
+    console.info(colors);
+
     const containerVariants = {
         hidden: {},
         visible: {
@@ -63,8 +65,8 @@ export default function Hero() {
     const colorsAsNumbers = [colors.main1, colors.main2, colors.main3].map((color) => convertToNumber(color));
 
     return (
-        <section className="min-h-screen items-stretch flex flex-col justify-between bg-[#070b0d]">
-            <Blobs colors={colorsAsNumbers} />
+        <section className={`min-h-screen items-stretch flex flex-col justify-between bg-[${colors.background1}]`}>
+            <Blobs colors={colorsAsNumbers} background={convertToNumber(colors.background1)} />
             <div className="grow shrink-0 p-12 flex items-center">
                 <div className="relative w-auto m-auto grow shrink">
                     <div className="-mx-3 -mt-3 last:-mb-3 justify-center md:flex">
@@ -85,8 +87,9 @@ export default function Hero() {
                                 />
                             </StyledLogo>
                             <motion.h1
-                                className="text-white text-opacity-80 text-3xl lg:text-5xl font-bold"
+                                className={`text-opacity-80 text-3xl lg:text-5xl font-bold`}
                                 variants={childrenVariants}
+                                style={{ color: colors.text1 }}
                             >
                                 Hi, I&apos;m Marcus. <br />
                                 <GradientSpan $color1={colors.main1} $color2={colors.main2} $color3={colors.main3}>
@@ -97,8 +100,8 @@ export default function Hero() {
                                     and avid policy wonk too.
                                 </GradientSpan>
                             </motion.h1>
-                            <motion.div variants={childrenVariants}>
-                                <SocialMedia />
+                            <motion.div style={{ color: colors.text2 }} variants={childrenVariants}>
+                                <SocialMedia align="left" />
                             </motion.div>
                         </motion.div>
                     </div>

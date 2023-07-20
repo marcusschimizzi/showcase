@@ -6,7 +6,17 @@ import { scaledRandom, map } from './utils';
 const simplex = createNoise2D();
 
 class Orb {
-    constructor(fill = 0x000000) {
+    bounds: { x: { min: number; max: number }; y: { min: number; max: number } };
+    x: number;
+    y: number;
+    scale: number;
+    fill: PIXI.ColorSource;
+    radius: number;
+    xOff: number;
+    yOff: number;
+    inc: number;
+    graphics: PIXI.Graphics;
+    constructor(fill: PIXI.ColorSource = 0x000000) {
         // the area an orb is allowed to move in
         this.bounds = this.setBounds();
 
