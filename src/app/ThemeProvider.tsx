@@ -13,7 +13,6 @@ export default function ThemeProvider({ children }: { children: ReactNode }) {
     const [theme, setTheme] = useState(darkTheme);
 
     const toggleTheme = () => {
-        console.info('toggleTheme. current theme:', theme.name);
         const newTheme = theme.name === 'light' ? darkTheme : lightTheme;
         setTheme(newTheme);
         window.localStorage.setItem('theme', newTheme.name);

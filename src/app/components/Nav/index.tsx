@@ -41,7 +41,6 @@ const MotionIcon = motion(FontAwesomeIcon);
 
 export default function Nav() {
     const { toggleTheme, theme } = useContext(ThemeContext);
-    console.info('theme:', theme, toggleTheme);
 
     return (
         <StyledNav>

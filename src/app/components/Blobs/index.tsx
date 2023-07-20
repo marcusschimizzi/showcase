@@ -4,7 +4,7 @@ import * as PIXI from 'pixi.js';
 import { KawaseBlurFilter } from '@pixi/filter-kawase-blur';
 import Orb from '../../utils/Orb';
 import { scaledRandom } from '../../utils/utils';
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import { styled } from 'styled-components';
 
 interface BlobsProps {
@@ -23,35 +23,41 @@ const StyledCanvas = styled.canvas`
 `;
 
 export default function Blobs({ colors, background = 0x000000 }: BlobsProps) {
+    const app = useRef<PIXI.Application>();
+
     useEffect(() => {
-        const app = new PIXI.Application({
-            view: document.getElementById('blobs-canvas') as HTMLCanvasElement,
-            resizeTo: window,
-            backgroundColor: background,
-        });
+        if (app.current) {
+            app.current.renderer.background.color = background;
+        } else {
+            app.current = new PIXI.Application({
+                view: document.getElementById('blobs-canvas') as HTMLCanvasElement,
+                resizeTo: window,
+                backgroundColor: background,
+            });
 
-        app.stage.filters = [new KawaseBlurFilter(25, 15, true)];
+            app.current.stage.filters = [new KawaseBlurFilter(25, 15, true)];
 
-        const orbs: Orb[] = [];
-        const orbCount = 15;
-        for (let i = 0; i < orbCount; i++) {
-            const orb = new Orb(colors[~~scaledRandom(0, colors.length)]);
-            app.stage.addChild(orb.graphics);
-            orbs.push(orb);
-        }
+            const orbs: Orb[] = [];
+            const orbCount = 15;
+            for (let i = 0; i < orbCount; i++) {
+                const orb = new Orb(colors[~~scaledRandom(0, colors.length)]);
+                app.current.stage.addChild(orb.graphics);
+                orbs.push(orb);
+            }
 
-        if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-            app.ticker.add(() => {
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                app.current.ticker.add(() => {
+                    orbs.forEach((orb) => {
+                        orb.update();
+                        orb.render();
+                    });
+                });
+            } else {
                 orbs.forEach((orb) => {
                     orb.update();
                     orb.render();
                 });
-            });
-        } else {
-            orbs.forEach((orb) => {
-                orb.update();
-                orb.render();
-            });
+            }
         }
     }, [background, colors]);
 
