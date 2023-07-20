@@ -30,6 +30,10 @@ const StyledList = styled.ul`
 
 const StyledListItem = styled.li`
     margin: 0 1rem;
+
+    @media (max-width: 500px) {
+        display: none;
+    }
 `;
 
 const StyledLink = styled(ScrollLink)`
