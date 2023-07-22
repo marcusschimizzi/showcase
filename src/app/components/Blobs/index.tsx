@@ -1,6 +1,7 @@
 'use client';
 
-import { ColorSource, Application } from 'pixi.js';
+import { Application } from '@pixi/app';
+import { ColorSource } from '@pixi/core';
 import { KawaseBlurFilter } from '@pixi/filter-kawase-blur';
 import Orb from '../../utils/Orb';
 import { scaledRandom } from '../../utils/utils';

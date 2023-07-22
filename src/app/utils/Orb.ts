@@ -1,4 +1,5 @@
-import { ColorSource, Graphics } from 'pixi.js';
+import { Graphics } from '@pixi/graphics';
+import { ColorSource } from '@pixi/core';
 import { createNoise2D } from 'simplex-noise';
 import debounce from 'debounce';
 import { scaledRandom, map } from './utils';
