@@ -1,10 +1,7 @@
+import dynamic from 'next/dynamic';
 import Blurb from './components/Blurb';
-import Contact from './components/Contact';
-import Experience from './components/Experience';
-import Footer from './components/Footer';
 import Hero from './components/Hero';
 import ProgressBar from './components/ProgressBar';
-import Projects from './components/Projects';
 
 const experience = {
     work: {
@@ -54,16 +51,21 @@ const experience = {
     },
 };
 
+const DynamicProjects = dynamic(() => import('./components/Projects'), { ssr: false });
+const DynamicExperience = dynamic(() => import('./components/Experience'), { ssr: false });
+const DynamicContact = dynamic(() => import('./components/Contact'), { ssr: false });
+const DynamicFooter = dynamic(() => import('./components/Footer'), { ssr: false });
+
 export default function Home() {
     return (
         <>
             <ProgressBar />
             <Hero />
             <Blurb />
-            <Projects />
-            <Experience work={experience.work} education={experience.education} />
-            <Contact />
-            <Footer />
+            <DynamicProjects />
+            <DynamicExperience work={experience.work} education={experience.education} />
+            <DynamicContact />
+            <DynamicFooter />
         </>
     );
 }

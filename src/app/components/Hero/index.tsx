@@ -3,8 +3,8 @@
 import Image from 'next/image';
 import { motion } from 'framer-motion';
 import SocialMedia from '../SocialMedia';
-import Blobs from '../Blobs';
 import styled, { useTheme } from 'styled-components';
+import dynamic from 'next/dynamic';
 
 const GradientSpan = styled.span<{ $color1: string; $color2: string; $color3: string }>`
     background-clip: text;
@@ -28,6 +28,11 @@ const StyledLogo = styled(motion.div)`
         width: 64px;
     }
 `;
+
+const DynamicBlobs = dynamic(() => import('../Blobs'), {
+    ssr: false,
+    loading: () => <div className="w-full h-full bg-black" />,
+});
 
 export default function Hero() {
     const { colors } = useTheme();
@@ -64,7 +69,7 @@ export default function Hero() {
 
     return (
         <section className={`min-h-screen items-stretch flex flex-col justify-between bg-[${colors.background1}]`}>
-            <Blobs colors={colorsAsNumbers} background={convertToNumber(colors.background1)} />
+            <DynamicBlobs colors={colorsAsNumbers} background={convertToNumber(colors.background1)} />
             <div className="grow shrink-0 p-12 flex items-center">
                 <div className="relative w-auto m-auto grow shrink">
                     <div className="-mx-3 -mt-3 last:-mb-3 justify-center md:flex">
