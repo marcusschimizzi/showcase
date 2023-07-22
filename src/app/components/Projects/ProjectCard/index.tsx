@@ -26,6 +26,12 @@ const StyledProjectCard = styled.li`
             transition: opacity 0.5s linear 0s;
         }
     }
+
+    video {
+        @media screen and (max-width: 650px) {
+            display: none;
+        }
+    }
 `;
 
 const StyledCardTitle = styled.h2`

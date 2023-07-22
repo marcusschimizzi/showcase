@@ -68,7 +68,7 @@ export default function Blurb() {
                     className="w-[256px] px-3 md:px-6 border-4 aspect-square rounded-full overflow-hidden mb-12 md:mb-0"
                     variants={childrenVariants}
                     style={{
-                        backgroundImage: 'url(/portrait.png)',
+                        backgroundImage: 'url(/portrait.jpg)',
                         backgroundSize: 'cover',
                         backgroundPosition: 'center',
                         borderColor: colors.accent1,
