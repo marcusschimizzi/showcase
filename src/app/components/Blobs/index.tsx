@@ -1,6 +1,6 @@
 'use client';
 
-import * as PIXI from 'pixi.js';
+import { ColorSource, Application } from 'pixi.js';
 import { KawaseBlurFilter } from '@pixi/filter-kawase-blur';
 import Orb from '../../utils/Orb';
 import { scaledRandom } from '../../utils/utils';
@@ -8,8 +8,8 @@ import { useEffect, useRef } from 'react';
 import { styled } from 'styled-components';
 
 interface BlobsProps {
-    colors: PIXI.ColorSource[];
-    background?: PIXI.ColorSource;
+    colors: ColorSource[];
+    background?: ColorSource;
 }
 
 const StyledCanvas = styled.canvas`
@@ -23,13 +23,13 @@ const StyledCanvas = styled.canvas`
 `;
 
 export default function Blobs({ colors, background = 0x000000 }: BlobsProps) {
-    const app = useRef<PIXI.Application>();
+    const app = useRef<Application>();
 
     useEffect(() => {
         if (app.current) {
             app.current.renderer.background.color = background;
         } else {
-            app.current = new PIXI.Application({
+            app.current = new Application({
                 view: document.getElementById('blobs-canvas') as HTMLCanvasElement,
                 resizeTo: window,
                 backgroundColor: background,

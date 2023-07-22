@@ -1,4 +1,4 @@
-import * as PIXI from 'pixi.js';
+import { ColorSource, Graphics } from 'pixi.js';
 import { createNoise2D } from 'simplex-noise';
 import debounce from 'debounce';
 import { scaledRandom, map } from './utils';
@@ -10,13 +10,13 @@ class Orb {
     x: number;
     y: number;
     scale: number;
-    fill: PIXI.ColorSource;
+    fill: ColorSource;
     radius: number;
     xOff: number;
     yOff: number;
     inc: number;
-    graphics: PIXI.Graphics;
-    constructor(fill: PIXI.ColorSource = 0x000000) {
+    graphics: Graphics;
+    constructor(fill: ColorSource = 0x000000) {
         // the area an orb is allowed to move in
         this.bounds = this.setBounds();
 
@@ -33,7 +33,7 @@ class Orb {
         this.yOff = scaledRandom(0, 1000);
         this.inc = 0.002;
 
-        this.graphics = new PIXI.Graphics();
+        this.graphics = new Graphics();
         this.graphics.alpha = 0.825;
 
         window.addEventListener(

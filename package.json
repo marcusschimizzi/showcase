@@ -35,6 +35,7 @@
         "typescript": "5.1.6"
     },
     "devDependencies": {
+        "@next/bundle-analyzer": "^13.4.12",
         "@types/debounce": "^1.2.1",
         "prettier": "^3.0.0"
     }
