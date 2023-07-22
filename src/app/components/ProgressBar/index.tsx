@@ -1,7 +1,20 @@
 'use client';
 
 import { useEffect } from 'react';
-import './ProgressBar.css';
+import styled from 'styled-components';
+
+const StyledProgressBar = styled.div`
+    position: fixed;
+    top: 0;
+    height: 5px;
+    width: 100%;
+    z-index: 1000;
+    transform: translate3d(0, 0, 0);
+    backface-visibility: hidden;
+    --progress: 0%;
+    background: ${({ theme }) =>
+        `linear-gradient(to right, ${theme.colors.main1} 0, ${theme.colors.main2} var(--progress), transparent 0)`};
+`;
 
 export default function ProgressBar() {
     useEffect(() => {
@@ -27,5 +40,5 @@ export default function ProgressBar() {
         return () => window.removeEventListener('scroll', updateScroll);
     }, []);
 
-    return <div className="progress-bar"></div>;
+    return <StyledProgressBar className="progress-bar"></StyledProgressBar>;
 }
