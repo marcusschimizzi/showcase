@@ -6,6 +6,7 @@ import { faHeart, faCoffee, faCopyright } from '@fortawesome/free-solid-svg-icon
 import { motion } from 'framer-motion';
 import styled from 'styled-components';
 import SocialMedia from '../SocialMedia';
+import LinesAnimation from '../LinesAnimation';
 
 const StyledFooter = styled.footer`
     background-color: ${({ theme }) => theme.colors.background1};
@@ -14,7 +15,8 @@ const StyledFooter = styled.footer`
 
 export default function Footer() {
     return (
-        <StyledFooter className="pt-12 pw-6 pb-24 text-center">
+        <StyledFooter className="pt-12 pw-6 pb-24 text-center relative">
+            <LinesAnimation />
             <motion.div
                 className="mx-auto relative w-auto"
                 initial={{ opacity: 0, y: 100 }}
