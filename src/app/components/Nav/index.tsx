@@ -77,7 +77,13 @@ export default function Nav() {
         }
 
         let target = document.querySelector(hash);
-        console.info('target', target);
+        console.info(
+            'target',
+            target,
+            hash,
+            document.querySelectorAll(hash),
+            document.getElementById(hash.replace('#', '')),
+        );
 
         if (!target) {
             return;
