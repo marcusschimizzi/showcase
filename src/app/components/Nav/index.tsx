@@ -65,6 +65,7 @@ export default function Nav() {
             return;
         }
         const hash = window.location.hash;
+        console.info('hash', hash);
 
         if (!hash) {
             return;
