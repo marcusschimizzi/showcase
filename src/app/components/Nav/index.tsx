@@ -77,6 +77,7 @@ export default function Nav() {
         }
 
         let target = document.querySelector(hash);
+        console.info('target', target);
 
         if (!target) {
             return;
@@ -84,6 +85,9 @@ export default function Nav() {
 
         const targetRect = target.getBoundingClientRect();
         const targetTop = targetRect.top + window.scrollY;
+
+        console.info('targetTop', targetTop);
+        console.info('targetRect', targetRect);
 
         window.scrollTo({
             top: targetTop,
