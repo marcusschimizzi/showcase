@@ -1,5 +1,5 @@
 'use client';
-import { useContext, useEffect } from 'react';
+import { useContext } from 'react';
 import styled from 'styled-components';
 import { ThemeContext } from '@/app/ThemeProvider';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -59,47 +59,6 @@ const MotionIcon = motion(FontAwesomeIcon);
 
 export default function Nav() {
     const { toggleTheme, theme } = useContext(ThemeContext);
-
-    useEffect(() => {
-        if (typeof window === 'undefined') {
-            return;
-        }
-        const hash = window.location.hash;
-        console.info('hash', hash);
-
-        if (!hash) {
-            return;
-        }
-
-        const startWithHash = /^#\w+/;
-        if (!startWithHash.test(hash)) {
-            return;
-        }
-
-        let target = document.querySelector(hash);
-        console.info(
-            'target',
-            target,
-            hash,
-            document.querySelectorAll(hash),
-            document.getElementById(hash.replace('#', '')),
-        );
-
-        if (!target) {
-            return;
-        }
-
-        const targetRect = target.getBoundingClientRect();
-        const targetTop = targetRect.top + window.scrollY;
-
-        console.info('targetTop', targetTop);
-        console.info('targetRect', targetRect);
-
-        window.scrollTo({
-            top: targetTop,
-            behavior: 'smooth',
-        });
-    }, []);
 
     return (
         <StyledNav>
