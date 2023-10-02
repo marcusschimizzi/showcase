@@ -1,13 +1,9 @@
-'use client';
-
 import './globals.css';
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import ThemeProvider from './ThemeProvider';
 import Nav from './components/Nav';
 import StyledComponentsRegistry from './lib/registry';
-import { useRouter } from 'next/router';
-import { useEffect } from 'react';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -22,26 +18,6 @@ export const metadata: Metadata = {
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
-    const router = useRouter();
-
-    useEffect(() => {
-        const handleRouteChange = (url: string) => {
-            if (url.includes('#')) {
-                const hash = url.split('#')[1];
-                const element = document.getElementById(hash);
-                if (element) {
-                    element.scrollIntoView({ behavior: 'smooth' });
-                }
-            }
-        };
-
-        router.events.on('routeChangeComplete', handleRouteChange);
-
-        return () => {
-            router.events.off('routeChangeComplete', handleRouteChange);
-        };
-    }, [router]);
-
     return (
         <html lang="en">
             <body className={inter.className}>
