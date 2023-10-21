@@ -54,6 +54,7 @@ const experience = {
 const DynamicProjects = dynamic(() => import('./components/Projects'), { ssr: false });
 const DynamicExperience = dynamic(() => import('./components/Experience'), { ssr: false });
 const DynamicContact = dynamic(() => import('./components/Contact'), { ssr: false });
+// const DynamicGitActivity = dynamic(() => import('./components/GitActivity'), { ssr: false });
 const DynamicFooter = dynamic(() => import('./components/Footer'), { ssr: false });
 
 export default function Home() {
@@ -65,6 +66,7 @@ export default function Home() {
             <DynamicProjects />
             <DynamicExperience work={experience.work} education={experience.education} />
             <DynamicContact />
+            {/* <DynamicGitActivity /> */}
             <DynamicFooter />
         </>
     );
