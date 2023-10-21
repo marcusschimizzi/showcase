@@ -11,7 +11,7 @@ const ApolloProvider: ComponentType<ApolloProviderProps> = ({ children }: Apollo
     const client = new ApolloClient({
         uri: 'https://api.github.com/graphql',
         headers: {
-            Authorization: `Bearer ${'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'}`,
+            Authorization: `Bearer ${process.env.GITHUB_TOKEN}`,
         },
         cache: new InMemoryCache(),
     });
