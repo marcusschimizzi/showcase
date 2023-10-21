@@ -4,6 +4,7 @@ import { Inter } from 'next/font/google';
 import ThemeProvider from './ThemeProvider';
 import Nav from './components/Nav';
 import StyledComponentsRegistry from './lib/registry';
+import ApolloProvider from './ApolloProvider';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -23,8 +24,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             <body className={inter.className}>
                 <StyledComponentsRegistry>
                     <ThemeProvider>
-                        <Nav />
-                        {children}
+                        <ApolloProvider>
+                            <Nav />
+                            {children}
+                        </ApolloProvider>
                     </ThemeProvider>
                 </StyledComponentsRegistry>
             </body>
