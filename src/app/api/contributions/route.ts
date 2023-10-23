@@ -31,10 +31,6 @@ interface ResponseData {
     };
 }
 
-interface Response {
-    data: Contributions;
-}
-
 interface ContributionDay {
     contributionCount: number;
     date: string;
