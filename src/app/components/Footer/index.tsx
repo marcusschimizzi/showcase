@@ -10,7 +10,7 @@ import LinesAnimation from '../LinesAnimation';
 
 const StyledFooter = styled.footer`
     background-color: ${({ theme }) => theme.colors.background1};
-    color: ${({ theme }) => theme.colors.text2};
+    color: ${({ theme }) => theme.colors.text1};
 `;
 
 export default function Footer() {
