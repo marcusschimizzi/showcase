@@ -5,15 +5,14 @@ import styled from 'styled-components';
 import { rgba } from 'polished';
 
 const StyledContact = styled.section`
-    background: ${({ theme }) => theme.colors.text2};
     background: ${({ theme }) =>
-        `linear-gradient(${rgba(theme.colors.background1, 0.5)}, ${rgba(
+        `linear-gradient(to bottom, transparent 0%, ${rgba(theme.colors.background1, 1)} 100%), linear-gradient(${rgba(
             theme.colors.background1,
             0.5,
-        )}), linear-gradient(96deg, ${rgba(theme.colors.background1, 1)} 0%, ${rgba(theme.colors.main1, 1)} 35%, ${rgba(
-            theme.colors.main3,
+        )}, ${rgba(theme.colors.background1, 0.5)}), linear-gradient(96deg, ${rgba(
+            theme.colors.background1,
             1,
-        )} 100%)`};
+        )} 0%, ${rgba(theme.colors.main1, 1)} 35%, ${rgba(theme.colors.main3, 1)} 100%)`};
 `;
 
 const StyledMail = styled.a`
@@ -29,10 +28,10 @@ const StyledMail = styled.a`
 
 export default function Contact() {
     return (
-        <StyledContact className="contact w-full min-h-64 flex justify-center items-center py-24" id="contact">
+        <StyledContact className="contact w-full min-h-64 flex justify-center items-center py-36" id="contact">
             <motion.div
                 className="max-w-[90%] md:max-w-prose text-2xl md:text-4xl font-extrabold text-center lg:text-justify"
-                whileInView={{ opacity: 1, y: 0, transition: { duration: 1, mass: 1.5, stiffness: 200 } }}
+                whileInView={{ opacity: 1, y: -20, transition: { duration: 1, mass: 1.5, stiffness: 200 } }}
                 initial={{ opacity: 0, y: 100 }}
                 viewport={{ once: true, amount: 0.3 }}
             >
