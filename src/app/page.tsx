@@ -13,7 +13,7 @@ const experience = {
                 startDate: 'August 2019',
                 endDate: 'Now',
                 description:
-                    'I worked on the Data Visualization team, building out new features for the Qualtrics XM Platform. I worked full-stack with a slight emphasis on the front-end, using technologies like React, Typescript, D3, and Golang.',
+                    'I work on the Data Visualization team, building out new features for the Qualtrics XM Platform. I worked full-stack with a slight emphasis on the front-end, using technologies like React, Typescript, D3, and Golang.',
                 image: '/XM.png',
             },
             {
@@ -55,6 +55,7 @@ const DynamicProjects = dynamic(() => import('./components/Projects'), { ssr: fa
 const DynamicExperience = dynamic(() => import('./components/Experience'), { ssr: false });
 const DynamicContact = dynamic(() => import('./components/Contact'), { ssr: false });
 // const DynamicGitActivity = dynamic(() => import('./components/GitActivity'), { ssr: false });
+// const DynamicRecentProjects = dynamic(() => import('./components/RecentProjects'), { ssr: false });
 const DynamicFooter = dynamic(() => import('./components/Footer'), { ssr: false });
 
 export default function Home() {
@@ -66,7 +67,8 @@ export default function Home() {
             <DynamicProjects />
             <DynamicExperience work={experience.work} education={experience.education} />
             <DynamicContact />
-            {/* <DynamicGitActivity /> */}
+            {/* <DynamicGitActivity />
+            <DynamicRecentProjects /> */}
             <DynamicFooter />
         </>
     );
