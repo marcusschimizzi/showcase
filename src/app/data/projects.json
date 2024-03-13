@@ -8,7 +8,7 @@
     },
     {
         "title": "Simudraft",
-        "description": "A web app designed to mock any arbitrary draft.",
+        "description": "A web app designed to conduct mock drafts with.",
         "thumbnail": "/images/simudraft.jpg",
         "demo": "/images/simudraft.webm",
         "link": "https://simudraft.netlify.app/"
