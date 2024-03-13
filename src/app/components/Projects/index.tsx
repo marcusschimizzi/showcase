@@ -6,37 +6,7 @@ import { faArrowUpRightFromSquare } from '@fortawesome/free-solid-svg-icons';
 import { motion, useAnimation, useInView } from 'framer-motion';
 import ProjectCard from './ProjectCard';
 import styled from 'styled-components';
-
-const projects = [
-    {
-        title: 'Polititrack',
-        description: 'Follow the 2016 presidential election.',
-        thumbnail: '/images/polititrack.jpg',
-        demo: '/images/polititrack.webm',
-        link: 'https://polititrack.us',
-    },
-    {
-        title: 'Simudraft',
-        description: 'A generic mock draft simulator.',
-        thumbnail: '/images/simudraft.jpg',
-        demo: '/images/simudraft.webm',
-        link: 'https://simudraft.netlify.app/',
-    },
-    {
-        title: 'Perception Website',
-        description: 'A homepage for a web management freelance client.',
-        thumbnail: '/images/perception.jpg',
-        demo: '/images/perception.webm',
-        link: 'https://perception.net',
-    },
-    {
-        title: 'Quick Trigger Kennels',
-        description: 'A full business website for a freelance client.',
-        thumbnail: '/images/qtk.jpg',
-        demo: '/images/qtk.webm',
-        link: 'https://quicktriggerkennels.com',
-    },
-];
+import projects from '@/app/data/projects.json';
 
 const containerVariants = {
     visible: {
