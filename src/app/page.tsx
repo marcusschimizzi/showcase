@@ -67,8 +67,8 @@ export default function Home() {
             <DynamicProjects />
             <DynamicExperience work={experience.work} education={experience.education} />
             <DynamicContact />
-            {/* <DynamicGitActivity />
-            <DynamicRecentProjects /> */}
+            {/* <DynamicGitActivity /> */}
+            {/* <DynamicRecentProjects /> */}
             <DynamicFooter />
         </>
     );

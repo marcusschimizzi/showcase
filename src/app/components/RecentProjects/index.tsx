@@ -131,9 +131,13 @@ const RecentProjects: ComponentType<RecentProjectsProps> = () => {
     useEffect(() => {
         const url = '/api/recent-repositories';
         async function fetchRecentProjects() {
-            const res = await fetch(url);
-            const data = await res.json();
-            setData(data);
+            try {
+                const res = await fetch(url);
+                const data = await res.json();
+                setData(data);
+            } catch (e) {
+                console.error(e);
+            }
         }
 
         if (!data) fetchRecentProjects();
@@ -141,32 +145,36 @@ const RecentProjects: ComponentType<RecentProjectsProps> = () => {
 
     return (
         <>
-            <SectionTitle>What I&apos;ve been up to recently</SectionTitle>
-            <SectionSubtitle>Projects I&apos;ve worked on most over the last month</SectionSubtitle>
-            <RecentProjectsSection>
-                {data && (
-                    <RecentProjectsGrid>
-                        {data.map((project) => (
-                            <StyledProjectCard key={project.name} href={project.url}>
-                                <ProjectTitle>
-                                    <ProjectTitleInner>{project.name}</ProjectTitleInner>
-                                </ProjectTitle>
-                                <ProjectDescription>{project.description}</ProjectDescription>
-                                <ProjectLanguages>
-                                    {project.languages
-                                        .sort((a, b) => b.percentage - a.percentage)
-                                        .map((language) => (
-                                            <ProjectLanguage key={language.name}>
-                                                <ProjectLanguageColor $color={language.color} />
-                                                {language.name + ' ' + language.percentage.toFixed(2) + '%'}
-                                            </ProjectLanguage>
-                                        ))}
-                                </ProjectLanguages>
-                            </StyledProjectCard>
-                        ))}
-                    </RecentProjectsGrid>
-                )}
-            </RecentProjectsSection>
+            {data && data.length === 0 && (
+                <>
+                    <SectionTitle>What I&apos;ve been up to recently</SectionTitle>
+                    <SectionSubtitle>Projects I&apos;ve worked on most over the last month</SectionSubtitle>
+                    <RecentProjectsSection>
+                        {data && (
+                            <RecentProjectsGrid>
+                                {data.map((project) => (
+                                    <StyledProjectCard key={project.name} href={project.url}>
+                                        <ProjectTitle>
+                                            <ProjectTitleInner>{project.name}</ProjectTitleInner>
+                                        </ProjectTitle>
+                                        <ProjectDescription>{project.description}</ProjectDescription>
+                                        <ProjectLanguages>
+                                            {project.languages
+                                                .sort((a, b) => b.percentage - a.percentage)
+                                                .map((language) => (
+                                                    <ProjectLanguage key={language.name}>
+                                                        <ProjectLanguageColor $color={language.color} />
+                                                        {language.name + ' ' + language.percentage.toFixed(2) + '%'}
+                                                    </ProjectLanguage>
+                                                ))}
+                                        </ProjectLanguages>
+                                    </StyledProjectCard>
+                                ))}
+                            </RecentProjectsGrid>
+                        )}
+                    </RecentProjectsSection>
+                </>
+            )}
         </>
     );
 };

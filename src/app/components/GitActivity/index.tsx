@@ -57,9 +57,13 @@ const GitActivity = () => {
     useEffect(() => {
         async function fetchGitActivity() {
             const url = '/api/contributions';
-            const res = await fetch(url);
-            const data = await res.json();
-            setData(data);
+            try {
+                const res = await fetch(url);
+                const data = await res.json();
+                setData(data);
+            } catch (e) {
+                console.error(e);
+            }
         }
         if (!data) fetchGitActivity();
     });
@@ -80,26 +84,30 @@ const GitActivity = () => {
     }, [colors.main1, colors.text1, data]);
 
     return (
-        <Wrapper>
-            <Table>
-                <TableBody>
-                    {data &&
-                        (data?.rows || []).map((week: any, i: any) => (
-                            <Row key={i}>
-                                {week.map((day: any, j: any) => (
-                                    <Day
-                                        key={j}
-                                        style={{
-                                            backgroundColor: day.color,
-                                        }}
-                                        title={`${day.contributionCount} contributions on ${day.date}`}
-                                    ></Day>
+        <>
+            {data && data.rows.length > 0 && (
+                <Wrapper>
+                    <Table>
+                        <TableBody>
+                            {data &&
+                                (data?.rows || []).map((week: any, i: any) => (
+                                    <Row key={i}>
+                                        {week.map((day: any, j: any) => (
+                                            <Day
+                                                key={j}
+                                                style={{
+                                                    backgroundColor: day.color,
+                                                }}
+                                                title={`${day.contributionCount} contributions on ${day.date}`}
+                                            ></Day>
+                                        ))}
+                                    </Row>
                                 ))}
-                            </Row>
-                        ))}
-                </TableBody>
-            </Table>
-        </Wrapper>
+                        </TableBody>
+                    </Table>
+                </Wrapper>
+            )}
+        </>
     );
 };
 
