@@ -82,7 +82,7 @@ export default function Hero() {
                             <StyledLogo className="block relative mb-3" variants={childrenVariants}>
                                 <Image
                                     className="block h-auto w-full"
-                                    src="/logo-gradient.svg"
+                                    src="/images/logo-gradient.svg"
                                     alt="m logo"
                                     width={12}
                                     height={12}

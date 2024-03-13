@@ -1,0 +1,13 @@
+{
+    "title": "Education",
+    "roles": [
+        {
+            "role": "B.S.E. in Computer Science",
+            "institution": "University of Notre Dame",
+            "startDate": "August 2015",
+            "endDate": "May 2019",
+            "description": "I graduated from the University of Notre Dame with a B.S.E. in Computer Science. I took a variety of courses in computer science, mathematics, and engineering.",
+            "image": "/images/notredame.jpg"
+        }
+    ]
+}

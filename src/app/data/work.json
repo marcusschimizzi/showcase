@@ -1,0 +1,29 @@
+{
+    "title": "Work Experience",
+    "roles": [
+        {
+            "institution": "Qualtrics",
+            "role": "Software Development Engineer",
+            "startDate": "August 2019",
+            "endDate": "Present",
+            "description": "I work on the Data Visualization team, building out new features for the Qualtrics XM Platform. I work full-stack with a slight emphasis on the front-end, using technologies like React, Typescript, D3, and Golang.",
+            "image": "/images/xm.png"
+        },
+        {
+            "institution": "Ford Motor Company",
+            "role": "Software Engineering Intern",
+            "startDate": "May 2018",
+            "endDate": "August 2018",
+            "description": "I worked on a team building a gamified application to help call center employees train and onboard. I worked full-stack, building out the front-end (Javascript & React) and the back-end (Java & Springboot) of the application.",
+            "image": "/images/ford.svg"
+        },
+        {
+            "institution": "Self Employed",
+            "role": "Freelance Web Developer",
+            "startDate": "May 2014",
+            "endDate": "August 2019",
+            "description": "I have worked on a variety of projects, building websites and small web applications for clients. I gained experience with a number of technologies, including HTML, CSS, Javascript, React, Node.js, PHP, and MongoDB. I also learned a lot about working with clients and managing projects.",
+            "image": "/images/logo.svg"
+        }
+    ]
+}
