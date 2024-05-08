@@ -4,20 +4,6 @@ import { useEffect, useRef } from 'react';
 import { motion, useAnimation, useInView } from 'framer-motion';
 import styled, { useTheme } from 'styled-components';
 
-const QualtricsText = styled.strong`
-    background-image: linear-gradient(90deg, #21dbaa, #00b4ef, #0768dd, #5f1ae5);
-    background-size: 100%;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    -moz-background-clip: text;
-    -moz-text-fill-color: transparent;
-    background-clip: text;
-
-    &:hover {
-        text-decoration: underline;
-    }
-`;
-
 const StyledBlurb = styled.section<{ $background: string; $text: string }>`
     background-color: ${(props) => props.$background};
     color: ${(props) => props.$text};
@@ -82,11 +68,7 @@ export default function Blurb() {
                     <br />
                     <p>
                         I&apos;m a full-stack software developer (although I&apos;ve been doing a lot of front end
-                        lately) especially interested in data visualization. I&apos;m currently working for{' '}
-                        <QualtricsText className="qualtrics">
-                            <a href="https://www.qualtrics.com">Qualtrics</a>
-                        </QualtricsText>{' '}
-                        on their data visualization team.
+                        lately) especially interested in data visualization.
                     </p>
                 </motion.div>
             </motion.div>
