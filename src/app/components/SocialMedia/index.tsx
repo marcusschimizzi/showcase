@@ -49,7 +49,7 @@ export default function SocialMedia({ align }: SocialMediaProps) {
         <div className="links">
             <StyledLink
                 id="linkedin"
-                href="https://www.linkedin.com/in/marcus-schimizzi-56a6229b"
+                href="https://www.linkedin.com/in/schimizzimj"
                 target="_blank"
                 $align={align}
             >
