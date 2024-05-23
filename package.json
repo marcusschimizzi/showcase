@@ -29,6 +29,7 @@
         "debounce": "^1.2.1",
         "eslint": "8.45.0",
         "eslint-config-next": "13.4.10",
+        "fathom-client": "^3.6.0",
         "framer-motion": "^10.12.22",
         "graphql": "^16.8.1",
         "hsl-to-hex": "^1.0.0",

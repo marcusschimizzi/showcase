@@ -5,6 +5,7 @@ import ThemeProvider from './ThemeProvider';
 import Nav from './components/Nav';
 import StyledComponentsRegistry from './lib/registry';
 import ApolloProvider from './ApolloProvider';
+import Fathom from './lib/Fathom';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -26,6 +27,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     return (
         <html lang="en">
             <body className={inter.className}>
+                <Fathom />
                 <StyledComponentsRegistry>
                     <ThemeProvider>
                         <ApolloProvider>
