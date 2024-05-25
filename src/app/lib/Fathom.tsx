@@ -14,7 +14,7 @@ function TrackPageView () {
         load(FATHOM_SITE_ID, {
             includedDomains: ['schimizzi.io'],
             auto: false,
-        })
+        });
     }, []);
 
     useEffect(() => {
