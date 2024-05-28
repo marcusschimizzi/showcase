@@ -69,7 +69,7 @@ export default function Projects({}) {
                 initial="hidden"
                 animate={controls}
             >
-                {projects.map((project, index) => (
+                {projects.filter((project) => project.featured).map((project, index) => (
                     <motion.div key={index} variants={variants}>
                         <ProjectCard
                             key={index}

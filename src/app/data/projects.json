@@ -1,30 +1,34 @@
 [
     {
         "title": "Polititrack",
-        "description": "A web app that tracked polling and candidate movements for the 2016 presidential election.",
+        "description": "A web app that tracked polling and candidate movements for the 2020 presidential election.",
         "thumbnail": "/images/polititrack.jpg",
         "demo": "/images/polititrack.webm",
-        "link": "https://polititrack.us"
+        "link": "https://polititrack.us",
+        "featured": true
     },
     {
         "title": "Simudraft",
         "description": "A web app designed to conduct mock drafts with.",
         "thumbnail": "/images/simudraft.jpg",
         "demo": "/images/simudraft.webm",
-        "link": "https://simudraft.netlify.app/"
+        "link": "https://simudraft.netlify.app/",
+        "featured": true
     },
     {
         "title": "Perception Website",
         "description": "A homepage for a web management freelance client.",
         "thumbnail": "/images/perception.jpg",
         "demo": "/images/perception.webm",
-        "link": "https://perception.net"
+        "link": "https://perception.net",
+        "featured": true
     },
     {
         "title": "Quick Trigger Kennels",
         "description": "A homepage for a dog breeding business.",
         "thumbnail": "/images/qtk.jpg",
         "demo": "/images/qtk.webm",
-        "link": "https://quicktriggerkennels.com"
+        "link": "https://quicktriggerkennels.com",
+        "featured": false
     }
 ]
