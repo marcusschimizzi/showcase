@@ -18,17 +18,6 @@ const GradientSpan = styled.span<{ $color1: string; $color2: string; $color3: st
     z-index: 2;
 `;
 
-const StyledLogo = styled(motion.div)`
-    margin: 0 0 0.25rem;
-    height: 32px;
-    width: 32px;
-
-    @media screen and (min-width: 1024px) {
-        height: 64px;
-        width: 64px;
-    }
-`;
-
 const DynamicBlobs = dynamic(() => import('../Blobs'), {
     ssr: false,
     loading: () => <div className="w-full h-full bg-black" />,
@@ -79,16 +68,6 @@ export default function Hero() {
                             initial="hidden"
                             animate="visible"
                         >
-                            <StyledLogo className="block relative mb-3" variants={childrenVariants}>
-                                <Image
-                                    className="block h-auto w-full"
-                                    src="/images/logo-gradient.svg"
-                                    alt="m logo"
-                                    width={12}
-                                    height={12}
-                                    priority
-                                />
-                            </StyledLogo>
                             <motion.h1
                                 className={`text-opacity-80 text-3xl lg:text-5xl font-bold`}
                                 variants={childrenVariants}

@@ -1,4 +1,5 @@
 'use client';
+import Image from 'next/image';
 import { useContext, useEffect } from 'react';
 import styled from 'styled-components';
 import { ThemeContext } from '@/app/ThemeProvider';
@@ -7,11 +8,22 @@ import { faMoon, faSun } from '@fortawesome/free-solid-svg-icons';
 import { motion } from 'framer-motion';
 import ScrollLink from '../ScrollLink';
 
+const StyledLogo = styled(motion.div)`
+    margin: 0 0 0.25rem;
+    height: 32px;
+    width: 32px;
+
+    @media screen and (min-width: 1024px) {
+        height: 64px;
+        width: 64px;
+    }
+`;
+
 const StyledNav = styled.nav`
     align-items: center;
     display: flex;
-    justify-content: flex-end;
-    padding: 1rem 0;
+    justify-content: space-between;
+    padding: 1rem 3rem;
     position: absolute;
     right: 0;
     top: 0;
@@ -25,7 +37,6 @@ const StyledList = styled.ul`
     justify-content: flex-end;
     list-style: none;
     margin: 0;
-    padding: 0 2rem;
 `;
 
 const StyledListItem = styled.li`
@@ -94,6 +105,21 @@ export default function Nav() {
 
     return (
         <StyledNav>
+            <StyledLogo
+                className="block relative mb-3"
+                initial={{ x: -100 }}
+                animate={{ x: 0 }}
+                transition={{ duration: 1 }}
+            >
+                <Image
+                    className="block h-auto w-full"
+                    src="/images/logo-gradient.svg"
+                    alt="m logo"
+                    width={12}
+                    height={12}
+                    priority
+                />
+            </StyledLogo>
             <StyledList>
                 <StyledListItem>
                     <StyledLink id="about">About</StyledLink>
@@ -112,8 +138,8 @@ export default function Nav() {
                         color={theme.colors.text2}
                         size="2xl"
                         icon={theme.name === 'light' ? faMoon : faSun}
-                        initial={{ x: 100 }}
-                        animate={{ x: 0 }}
+                        initial={{ x: 100, rotate: 360 }}
+                        animate={{ x: 0, rotate: 0 }}
                         transition={{ duration: 1 }}
                         style={{
                             transition: 'color 1s linear',
