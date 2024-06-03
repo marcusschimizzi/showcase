@@ -1,13 +1,52 @@
 [
-    "software developer",
-    "avid policy wonk",
-    "travel enthusiast",
-    "Penguins fan 🐧",
-    "Steelers fan 🏈",
-    "current Seattleite",
-    "Notre Dame alum ☘️",
-    "amateur chef",
-    "aspiring baker",
-    "coffee snob",
-    "data visualization buff"
+    {
+        "text": "software developer",
+        "emoji": "",
+        "category": "professional"
+    },
+    {
+        "text": "data visualization buff",
+        "emoji": "📈",
+        "category": "professional"
+    },
+    {
+        "text": "travel enthusiast",
+        "emoji": "",
+        "category": "interests"
+    },
+    {
+        "text": "current Seattleite",
+        "emoji": "🌲",
+        "category": "descriptive"
+    },
+    {
+        "text": "Notre Dame alum",
+        "emoji": "☘️",
+        "category": "descriptive"
+    },
+    {
+        "text": "amateur chef",
+        "emoji": "👨‍🍳",
+        "category": "interests"
+    },
+    {
+        "text": "consumer of too much coffee",
+        "emoji": "☕",
+        "category": "descriptive"
+    },
+    {
+        "text": "big sports guy",
+        "emoji": "🏈",
+        "category": "interests"
+    },
+    {
+        "text": "multitime pub trivia champion",
+        "emoji": "",
+        "category": "descriptive"
+    },
+    {
+        "text": "tabs user",
+        "emoji": "\t",
+        "category": "professional"
+    }
 ]
