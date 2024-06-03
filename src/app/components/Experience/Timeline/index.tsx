@@ -10,7 +10,7 @@ interface Role {
     startDate: string;
     endDate: string;
     description: string;
-    image: string;
+    image?: string;
 }
 
 export interface TimelineProps {
