@@ -23,7 +23,7 @@ const StyledNav = styled.nav`
     align-items: center;
     display: flex;
     justify-content: space-between;
-    padding: 1rem 3rem;
+    padding: 1rem 1.25rem;
     position: absolute;
     right: 0;
     top: 0;

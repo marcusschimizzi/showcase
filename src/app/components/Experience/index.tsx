@@ -10,16 +10,22 @@ interface ExperienceProps {
 
 const StyledExperience = styled.div`
     color: ${({ theme }) => theme.colors.text1};
+    display: grid;
+    column-gap: 0.5rem;
+    grid-template-columns: repeat(24, 1fr);
+    margin: 0px auto;
+    max-width: 1600px;
+    padding: 0 3rem;
+    width: 100%;
 `;
 
 export default function Experience({ work, education }: ExperienceProps) {
     return (
-        <StyledExperience
-            className="flex flex-col gap-4 py-16 md:flex-row justify-center items-center md:items-start"
-            id="experience"
-        >
-            <Timeline title={work.title} roles={work.roles} />
-            <Timeline title={education.title} roles={education.roles} />
-        </StyledExperience>
+        <section className="my-40">
+            <StyledExperience id="experience">
+                <Timeline title={work.title} roles={work.roles} />
+                <Timeline title={education.title} roles={education.roles} />
+            </StyledExperience>
+        </section>
     );
 }

@@ -42,16 +42,50 @@ const containerVariants = {
     },
 };
 
-const StyledRole = styled.div`
-    color: ${({ theme }) => theme.colors.text2};
+const StyledTimeline = styled(motion.div)`
+    grid-column: 1 / -1;
+    margin-bottom: 5rem;
+
+    @media (min-width: 1200px) {
+        grid-column: span 12;
+        margin-bottom: 0px;
+    }
 `;
 
 const StyledRoleTitle = styled.div`
     color: ${({ theme }) => theme.colors.text1};
 `;
 
-const StyledTimeline = styled.div`
+const StyledInstitution = styled.span`
+    color: ${({ theme }) => theme.colors.background1};
     background-color: ${({ theme }) => theme.colors.text1};
+`;
+
+const StyledLineElement = styled.div`
+    background: linear-gradient(
+        rgba(255, 255, 255, 0.25) 0%,
+        rgba(255, 255, 255, 0.25) calc(100% - 4rem),
+        rgba(255, 255, 255, 0)
+    );
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: 2px;
+`;
+
+const StyledDecoration = styled.div`
+    background-color: ${({ theme }) => theme.colors.background1};
+    border-width: 2px;
+    border-style: solid;
+    border-color: ${({ theme }) => theme.colors.text1};
+    border-radius: 0.75rem;
+    height: 1.25rem;
+    left: calc(1px - 0.625rem);
+    position: absolute;
+    top: 0;
+    width: 1.25rem;
+    z-index: 1;
 `;
 
 const StyledImageOuterWrapper = styled.div`
@@ -79,45 +113,37 @@ export default function Timeline({ title, roles }: TimelineProps) {
     }, [controls, inView]);
 
     return (
-        <motion.div
-            className="max-w-[80%] md:max-w-[45%]"
-            ref={sectionRef}
-            variants={containerVariants}
-            initial="hidden"
-            animate={controls}
-        >
-            <div className="pb-5 font-sans text-xl font-bold">{title}</div>
-            {roles.map((role, index) => (
-                <motion.div key={index} variants={variants}>
-                    <div className="flex min-h-[200px] font-sans pb-2">
-                        <div className="flex flex-col">
-                            <StyledImageOuterWrapper className="relative overflow-hidden rounded-md">
-                                <StyledImageInnerWrapper className="w-full overflow-hidden rounded-[3px]">
-                                    <StyledImage
-                                        src={role.image}
-                                        alt={role.institution}
-                                        width={65}
-                                        height={65}
-                                        className="absolute h-full w-full aspect-square"
-                                    />
-                                </StyledImageInnerWrapper>
-                            </StyledImageOuterWrapper>
-                            <StyledTimeline className="mt-2 w-px grow self-center"></StyledTimeline>
+        <StyledTimeline ref={sectionRef} variants={containerVariants} initial="hidden" animate={controls}>
+            <div className="mb-8 font-sans text-3xl font-bold">{title}</div>
+            <div className="ml-8 relative">
+                {roles.map((role, index) => (
+                    <motion.div key={index} variants={variants} className="pt-0 px-8 pb-16 relative">
+                        <StyledDecoration />
+                        {/* <div className="flex flex-col">
+                                <StyledImageOuterWrapper className="relative overflow-hidden rounded-md">
+                                    <StyledImageInnerWrapper className="w-full overflow-hidden rounded-[3px]">
+                                        <StyledImage
+                                            src={role.image}
+                                            alt={role.institution}
+                                            width={65}
+                                            height={65}
+                                            className="absolute h-full w-full aspect-square"
+                                        />
+                                    </StyledImageInnerWrapper>
+                                </StyledImageOuterWrapper>
+                            </div> */}
+                        <StyledRoleTitle className="text-xl font-medium mb-3">{role.role}</StyledRoleTitle>
+                        <div className="flex flex-wrap items-baseline text-sm font-medium mb-3 opacity-50 uppercase">
+                            <StyledInstitution className="mr-4 backdrop-opacity-75 py-1 px-2">
+                                {role.institution}
+                            </StyledInstitution>
+                            {role.startDate} - {role.endDate}
                         </div>
-                        <StyledRole className="flex-initial pl-4">
-                            <StyledRoleTitle className="font-bold">{role.institution}</StyledRoleTitle>
-                            <div className="text-sm">
-                                <span>
-                                    {role.role}
-                                    <span className="mx-1">●</span>
-                                </span>
-                                {role.startDate} - {role.endDate}
-                            </div>
-                            <div className="pb-5 pt-3 font-serif">{role.description}</div>
-                        </StyledRole>
-                    </div>
-                </motion.div>
-            ))}
-        </motion.div>
+                        <div className="pb-5 pt-3 font-serif">{role.description}</div>
+                    </motion.div>
+                ))}
+                <StyledLineElement />
+            </div>
+        </StyledTimeline>
     );
 }
