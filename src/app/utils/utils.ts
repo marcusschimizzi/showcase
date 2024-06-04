@@ -32,3 +32,26 @@ export function useInterval(callback: () => void, delay: number) {
 export function capitalize(str: string) {
     return str.charAt(0).toUpperCase() + str.slice(1);
 }
+
+export const setRandomInterval = (callback: Function, minDelay: number, maxDelay: number) => {
+    let timeout: NodeJS.Timeout;
+
+    const runInterval = () => {
+        const timeoutFunction = () => {
+            callback();
+            runInterval();
+        };
+
+        const delay = Math.floor(Math.random() * (maxDelay - minDelay + 1)) + minDelay;
+
+        timeout = setTimeout(timeoutFunction, delay);
+    };
+
+    runInterval();
+
+    return {
+        clear() {
+            clearTimeout(timeout);
+        },
+    };
+};
