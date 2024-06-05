@@ -5,6 +5,8 @@ import { motion } from 'framer-motion';
 import SocialMedia from '../SocialMedia';
 import styled, { useTheme } from 'styled-components';
 import dynamic from 'next/dynamic';
+import Epithets from '../Epithets';
+import epithets from '../../data/epithets.json';
 
 const GradientSpan = styled.span<{ $color1: string; $color2: string; $color3: string }>`
     background-clip: text;
@@ -75,11 +77,7 @@ export default function Hero() {
                             >
                                 Hi, I&apos;m Marcus. <br />
                                 <GradientSpan $color1={colors.main1} $color2={colors.main2} $color3={colors.main3}>
-                                    Software developer,
-                                    <br />
-                                    travel enthusiast,
-                                    <br />
-                                    and avid policy wonk too.
+                                    <Epithets epithets={epithets} />
                                 </GradientSpan>
                             </motion.h1>
                             <motion.div style={{ color: colors.text2 }} variants={childrenVariants}>
