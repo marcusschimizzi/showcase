@@ -1,76 +1,146 @@
-import { capitalize } from "@/app/utils/utils";
-import { useEffect, useState } from "react";
+import { setRandomInterval } from '@/app/lib/utils';
+import { capitalize } from '@/app/utils/utils';
+import { ReactNode, useEffect, useMemo, useState } from 'react';
+import styled, { useTheme } from 'styled-components';
 
-interface EpithetsProps {
 
-  /** The number of epithets to display at once. */
-  numEpithets: number;
+const MIN_INTERVAL = 7000;
+const MAX_INTERVAL = 100000;
 
-  /** Array of possible epithets to show. */
-  epithets: string[];
+const GradientSpan = styled.span<{ $color1: string; $color2: string; $color3: string }>`
+    background-clip: text;
+    background-image: ${(props) =>
+        `linear-gradient(160deg, ${props.$color1} 0, ${props.$color2} 50%, ${props.$color3} 100%)`};
+    display: inline-block;
+    position: relative;
+    -webkit-text-fill-color: transparent;
+    -webkit-background-clip: text;
+    z-index: 2;
+`;
 
-  /** Time (ms) to wait between changing an epithet. */
-  interval: number;
+const StyledEpithetWrapper = styled.div`
+  display: block;
+  position: relative;
+  height: 3.5rem;
+  white-space: nowrap;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  margin: 1rem 0;
+
+  @media screen and (min-width: 1024px) {
+        height: 4.5rem;
+}
+`;
+
+interface SingleEpithet {
+    /** The text content of the epithet. */
+    text: string;
+
+    /** The category of epithet. */
+    category: string;
+
+    /** An optional emoji or decoration to include with the epithet. */
+    emoji?: ReactNode;
 }
 
-export default function Epithets({ numEpithets, epithets, interval }: EpithetsProps) {
-  const [selectedEpithets, setSelectedEpithets] = useState<string[]>([]);
+interface EpithetsProps {
+    /** Array of possible epithets to show. */
+    epithets: SingleEpithet[];
+}
 
-  useEffect(() => {
-      
-    function initializeEpithets() {
-      const initialEpithets = [];
-      for (let i = 0; i < numEpithets; i++) {
-        initialEpithets.push(epithets[i]);
-      }
-      return initialEpithets;
-    }
-    setSelectedEpithets(initializeEpithets());
-  }, [numEpithets, epithets]);
+interface EpithetProps {
+    epithets: SingleEpithet[];
+    formatter: (epithet: SingleEpithet) => ReactNode;
+}
 
-  // we should change one selected epithet each interval
-  // we should not change the selected epithets if the interval is 0
-  useEffect(() => {
-    if (interval === 0) {
-      return;
-    }
+function Epithet({ epithets, formatter }: EpithetProps) {
+    const { colors } = useTheme();
+    const [index, setIndex] = useState(0);
 
-    function chooseRandomEpithet() {
-      return epithets[Math.floor(Math.random() * epithets.length)];
-    }
-
-    const intervalId = setInterval(() => {
-      setSelectedEpithets((prevEpithets) => {
-        const newEpithets = [...prevEpithets];
-        const randomIndex = Math.floor(Math.random() * numEpithets);
-        let randomEpithet = chooseRandomEpithet();
-        while (epithets.length > numEpithets && newEpithets.includes(randomEpithet)) {
-          randomEpithet = chooseRandomEpithet();
+    function getTrueIndex(index: number) {
+        if (index < 0) {
+            return epithets.length - 1;
         }
-        newEpithets[randomIndex] = randomEpithet;
-        return newEpithets;
-      });
-    }, interval);
-
-    return () => clearInterval(intervalId);
-  }, [numEpithets, epithets, interval]);
-
-
-  function formatEpithet(epithet: string, index: number) {
-    if (index === 0) {
-      return `${capitalize(epithet)},`;
+        if (index >= epithets.length) {
+            return 0;
+        }
+        return index;
     }
-    if (index === numEpithets - 1) {
-      return `and ${epithet}.`;
-    }
-    return `${epithet},`;
-  }
 
-  return (
-    <div>
-      {selectedEpithets.map((epithet, index) => (
-        <div key={index}>{formatEpithet(epithet, index)}</div>
-      ))}
-    </div>
-  );
+    function getEpithetClass(i: number) {
+        let baseClass = 'epithet-item text-3xl lg:text-5xl font-bold';
+        if (i === index) {
+            baseClass += ' epithet-item-current';
+        } else if (i === getTrueIndex(index - 1)) {
+            baseClass += ' epithet-item-previous';
+        } else if (i === getTrueIndex(index + 1)) {
+            baseClass += ' epithet-item-next';
+        }
+        return baseClass;
+    }
+
+    useEffect(() => {
+        const interval = setRandomInterval(() => {
+            setIndex((prevIndex) => (prevIndex + 1) % epithets.length);
+        }, MIN_INTERVAL, MAX_INTERVAL);
+
+        return () => interval.clear();
+    }, [epithets.length]);
+
+    return (
+        <StyledEpithetWrapper>
+          {epithets.map((epithet, i) => {
+            if (i === index || i === getTrueIndex(index - 1) || i === getTrueIndex(index + 1)) {
+              return (
+                <div key={`epithet-${i}`} className={getEpithetClass(i)} id={`epithet-${i}-${epithet.text}`}>
+                                                  <GradientSpan $color1={colors.main1} $color2={colors.main2} $color3={colors.main3}>
+
+                  {formatter(epithet)}
+                  </GradientSpan>
+                </div>
+              );
+            }
+            return null;
+          })}
+        </StyledEpithetWrapper>
+    );
+}
+
+interface SortedEpithets {
+    [key: string]: SingleEpithet[];
+}
+
+function sortEpithets(unsortedEpithets: SingleEpithet[]) {
+    const sorted: SortedEpithets = {};
+    unsortedEpithets.forEach((epithet) => {
+        if (epithet.category in sorted) {
+            sorted[epithet.category].push(epithet);
+        } else {
+            sorted[epithet.category] = [epithet];
+        }
+    });
+    return sorted;
+}
+
+export default function Epithets({ epithets }: EpithetsProps) {
+    const sortedEpithets: SortedEpithets = useMemo(() => sortEpithets(epithets), [epithets]);
+
+    function epithetFormatter(index: number) {
+        if (index === 0) {
+            return (epithet: SingleEpithet) => `${capitalize(epithet.text)},`;
+        }
+        if (index === Object.keys(sortedEpithets).length - 1) {
+            return (epithet: SingleEpithet) => `and ${epithet.text}.`;
+        }
+        return (epithet: SingleEpithet) => `${epithet.text},`;
+    }
+
+    return (
+        <div>
+            {Object.keys(sortedEpithets).map((key, index) => {
+                return <Epithet epithets={sortedEpithets[key]} key={key} formatter={epithetFormatter(index)} />;
+            })}
+        </div>
+    );
 }

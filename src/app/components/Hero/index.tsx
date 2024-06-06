@@ -1,6 +1,5 @@
 'use client';
 
-import Image from 'next/image';
 import { motion } from 'framer-motion';
 import SocialMedia from '../SocialMedia';
 import styled, { useTheme } from 'styled-components';
@@ -77,9 +76,9 @@ export default function Hero() {
                                 <GradientSpan $color1={colors.main1} $color2={colors.main2} $color3={colors.main3}>
                                     Software developer,
                                     <br />
-                                    travel enthusiast,
+                                    data visualization buff,
                                     <br />
-                                    and avid policy wonk too.
+                                    and avid learner.
                                 </GradientSpan>
                             </motion.h1>
                             <motion.div style={{ color: colors.text2 }} variants={childrenVariants}>
