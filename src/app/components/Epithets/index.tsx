@@ -1,4 +1,4 @@
-import { setRandomInterval } from '@/app/lib/utils';
+import { setRandomInterval } from '@/app/utils/utils';
 import { capitalize } from '@/app/utils/utils';
 import { ReactNode, useEffect, useMemo, useState } from 'react';
 import styled, { useTheme } from 'styled-components';
