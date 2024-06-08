@@ -24,10 +24,7 @@ const StyledEpithetWrapper = styled.div`
     overflow: hidden;
     align-items: center;
     width: 100%;
-
-    @media screen and (min-width: 1024px) {
-        height: 4rem;
-    }
+    transition: height 0.7s ease-in-out;
 `;
 
 interface SingleEpithet {
@@ -54,6 +51,7 @@ interface EpithetProps {
 function Epithet({ epithets, formatter }: EpithetProps) {
     const { colors } = useTheme();
     const [index, setIndex] = useState(0);
+    const [height, setHeight] = useState(0);
 
     function getTrueIndex(index: number) {
         if (index < 0) {
@@ -78,19 +76,31 @@ function Epithet({ epithets, formatter }: EpithetProps) {
     }
 
     useEffect(() => {
+        function updateHeight() {
+            const height = document.getElementById(`epithet-${index}-${epithets[index].text}`)?.clientHeight;
+            if (height) {
+                setHeight(height);
+            }
+        }
+
+        updateHeight();
+
         const interval = setRandomInterval(
             () => {
                 setIndex((prevIndex) => (prevIndex + 1) % epithets.length);
+                updateHeight();
             },
             MIN_INTERVAL,
             MAX_INTERVAL,
         );
 
         return () => interval.clear();
-    }, [epithets.length]);
+    }, [epithets, epithets.length, index]);
 
     return (
-        <StyledEpithetWrapper>
+        <StyledEpithetWrapper style={{
+            height: `${height}px`,
+        }}>
             {epithets.map((epithet, i) => {
                 if (i === index || i === getTrueIndex(index - 1) || i === getTrueIndex(index + 1)) {
                     return (
