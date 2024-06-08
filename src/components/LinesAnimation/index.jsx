@@ -13,6 +13,7 @@ const StyledAnimationWrapper = styled.div`
     height: 100%;
     z-index: 0;
     position: absolute;
+    bottom: -250px;
 `;
 
 const StyledSVG = styled.svg`
