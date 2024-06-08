@@ -3,9 +3,10 @@
 @tailwind utilities;
 
 .epithet-item {
-    transition: transform 1s ease-in-out, opacity 0.5s ease-in-out;
-    background-color: white;
-    padding: 0.5rem 1rem;
+    transition:
+        transform 1s ease-in-out,
+        opacity 0.5s ease-in-out;
+    position: absolute;
 }
 
 .epithet-item-previous {
@@ -15,6 +16,7 @@
 
 .epithet-item-next {
     transform: translateY(100%);
+    opacity: 0;
 }
 
 .epithet-item-current {
