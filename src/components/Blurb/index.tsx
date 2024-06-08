@@ -43,7 +43,7 @@ export default function Blurb() {
     }, [control, inView]);
 
     return (
-        <StyledBlurb $background={colors.background1} $text={colors.text} className="py-12" ref={sectionRef} id="about">
+        <StyledBlurb $background={colors.background1} $text={colors.text} className="my-40" ref={sectionRef} id="about">
             <motion.div
                 className="mx-auto flex flex-col md:flex-row items-center justify-between md:justify-around w-100 md:w-9/12 pt-3 md:py-0"
                 variants={containerVariants}

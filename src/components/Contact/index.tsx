@@ -28,7 +28,7 @@ const StyledMail = styled.a`
 
 export default function Contact() {
     return (
-        <StyledContact className="contact w-full min-h-64 flex justify-center items-center py-36" id="contact">
+        <StyledContact className="contact w-full min-h-64 flex justify-center items-center py-40" id="contact">
             <motion.div
                 className="max-w-[90%] md:max-w-prose text-2xl md:text-4xl font-extrabold text-center lg:text-justify"
                 whileInView={{ opacity: 1, y: -20, transition: { duration: 1, mass: 1.5, stiffness: 200 } }}
