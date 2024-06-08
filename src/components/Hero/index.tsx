@@ -2,20 +2,10 @@
 
 import { motion } from 'framer-motion';
 import SocialMedia from '../SocialMedia';
-import styled, { useTheme } from 'styled-components';
+import { useTheme } from 'styled-components';
 import dynamic from 'next/dynamic';
-
-const GradientSpan = styled.span<{ $color1: string; $color2: string; $color3: string }>`
-    background-clip: text;
-    background-image: ${(props) =>
-        `linear-gradient(160deg, ${props.$color1} 0, ${props.$color2} 50%, ${props.$color3} 100%)`};
-    display: inline-block;
-    padding-bottom: 1rem;
-    position: relative;
-    -webkit-text-fill-color: transparent;
-    -webkit-background-clip: text;
-    z-index: 2;
-`;
+import Epithets from '../Epithets';
+import epithets from '@/data/epithets.json';
 
 const DynamicBlobs = dynamic(() => import('../Blobs'), {
     ssr: false,
@@ -68,19 +58,15 @@ export default function Hero() {
                             animate="visible"
                         >
                             <motion.h1
-                                className={`text-opacity-80 text-3xl lg:text-5xl font-bold`}
+                                className={`text-opacity-80 text-4xl lg:text-6xl font-bold`}
                                 variants={childrenVariants}
                                 style={{ color: colors.text1 }}
                             >
                                 Hi, I&apos;m Marcus. <br />
-                                <GradientSpan $color1={colors.main1} $color2={colors.main2} $color3={colors.main3}>
-                                    Software developer,
-                                    <br />
-                                    data visualization buff,
-                                    <br />
-                                    and avid learner.
-                                </GradientSpan>
                             </motion.h1>
+                            <div>
+                                <Epithets epithets={epithets} />
+                            </div>
                             <motion.div style={{ color: colors.text2 }} variants={childrenVariants}>
                                 <SocialMedia align="left" />
                             </motion.div>

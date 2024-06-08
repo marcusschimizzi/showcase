@@ -2,10 +2,10 @@ import './globals.css';
 import type { Metadata, Viewport } from 'next';
 import { Inter } from 'next/font/google';
 import ThemeProvider from './ThemeProvider';
-import Nav from './components/Nav';
-import StyledComponentsRegistry from './lib/registry';
+import Nav from '@/components/Nav';
+import StyledComponentsRegistry from '@/lib/registry';
 import ApolloProvider from './ApolloProvider';
-import Fathom from './lib/Fathom';
+import Fathom from '@/lib/Fathom';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -13,7 +13,7 @@ export const viewport: Viewport = {
     width: 'device-width',
     initialScale: 1,
     themeColor: '#232323',
-}
+};
 
 export const metadata: Metadata = {
     title: 'Marcus Schimizzi',

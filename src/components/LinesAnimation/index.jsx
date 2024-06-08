@@ -3,7 +3,7 @@ import { useSpring, animated } from 'react-spring';
 import { useTheme } from 'styled-components';
 import { area, curveBasis } from 'd3-shape';
 import styled from 'styled-components';
-import { scaledRandom, useInterval } from '@/app/utils/utils';
+import { scaledRandom, useInterval } from '@/utils/utils';
 
 const WIGGLES = 20;
 const HEIGHT = 30;

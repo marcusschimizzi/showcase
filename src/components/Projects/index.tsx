@@ -6,7 +6,7 @@ import { faArrowUpRightFromSquare } from '@fortawesome/free-solid-svg-icons';
 import { motion, useAnimation, useInView } from 'framer-motion';
 import ProjectCard from './ProjectCard';
 import styled from 'styled-components';
-import projects from '@/app/data/projects.json';
+import projects from '@/data/projects.json';
 
 const containerVariants = {
     visible: {
@@ -69,18 +69,20 @@ export default function Projects({}) {
                 initial="hidden"
                 animate={controls}
             >
-                {projects.filter((project) => project.featured).map((project, index) => (
-                    <motion.div key={index} variants={variants}>
-                        <ProjectCard
-                            key={index}
-                            title={project.title}
-                            description={project.description}
-                            thumbnail={project.thumbnail}
-                            demo={project.demo}
-                            link={project.link}
-                        />
-                    </motion.div>
-                ))}
+                {projects
+                    .filter((project) => project.featured)
+                    .map((project, index) => (
+                        <motion.div key={index} variants={variants}>
+                            <ProjectCard
+                                key={index}
+                                title={project.title}
+                                description={project.description}
+                                thumbnail={project.thumbnail}
+                                demo={project.demo}
+                                link={project.link}
+                            />
+                        </motion.div>
+                    ))}
             </motion.ul>
             <div className="pt-12 flex justify-center">
                 <div className="max-w-fit">
