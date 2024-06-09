@@ -98,9 +98,11 @@ function Epithet({ epithets, formatter }: EpithetProps) {
     }, [epithets, epithets.length, index]);
 
     return (
-        <StyledEpithetWrapper style={{
-            height: `${height}px`,
-        }}>
+        <StyledEpithetWrapper
+            style={{
+                height: `${height}px`,
+            }}
+        >
             {epithets.map((epithet, i) => {
                 if (i === index || i === getTrueIndex(index - 1) || i === getTrueIndex(index + 1)) {
                     return (
