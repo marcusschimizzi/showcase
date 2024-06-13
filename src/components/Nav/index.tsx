@@ -41,9 +41,15 @@ const StyledList = styled.ul`
 
 const StyledListItem = styled.li`
     margin: 0 1rem;
+    font-size: 1.25rem;
+
+    @media (max-width: 800px) {
+        font-size: 1rem;
+    }
 
     @media (max-width: 500px) {
         display: none;
+        font-size: 0.75rem;
     }
 `;
 
