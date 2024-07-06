@@ -1,13 +1,13 @@
 import './globals.css';
 import type { Metadata, Viewport } from 'next';
-import { Inter } from 'next/font/google';
+import { Open_Sans } from 'next/font/google';
 import ThemeProvider from './ThemeProvider';
 import Nav from '@/components/Nav';
 import StyledComponentsRegistry from '@/lib/registry';
 import ApolloProvider from './ApolloProvider';
 import Fathom from '@/lib/Fathom';
 
-const inter = Inter({ subsets: ['latin'] });
+const openSans = Open_Sans({ subsets: ['latin'] });
 
 export const viewport: Viewport = {
     width: 'device-width',
@@ -26,7 +26,7 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
     return (
         <html lang="en">
-            <body className={inter.className}>
+            <body className={openSans.className}>
                 <Fathom />
                 <StyledComponentsRegistry>
                     <ThemeProvider>
