@@ -79,26 +79,27 @@ const StyledDecoration = styled.div`
     border-width: 2px;
     border-style: solid;
     border-color: ${({ theme }) => theme.colors.text1};
-    border-radius: 0.75rem;
-    height: 1.25rem;
-    left: calc(1px - 0.625rem);
+    border-radius: 1.5rem;
+    height: 2.25rem;
+    left: calc(1px - 1.125rem);
     position: absolute;
     top: 0;
-    width: 1.25rem;
+    width: 2.25rem;
     z-index: 1;
 `;
 
-const StyledImageOuterWrapper = styled.div`
-    width: 65px;
-    height: 65px;
-`;
-
-const StyledImageInnerWrapper = styled.div`
-    background-color: ${({ theme }) => theme.colors.text1};
-`;
-
 const StyledImage = styled(Image)`
+    background-color: ${({ theme }) => theme.colors.text1};
+    border-radius: 0.375rem;
+    border-width: 2px;
+    border-style: solid;
+    z-index: 1;
     color: transparent;
+    position: absolute;
+    top: 0;
+    left: calc(1px - 1.125rem);
+    width: 2.25rem;
+    height: 2.25rem;
 `;
 
 export default function Timeline({ title, roles }: TimelineProps) {
@@ -118,20 +119,11 @@ export default function Timeline({ title, roles }: TimelineProps) {
             <div className="ml-8 relative">
                 {roles.map((role, index) => (
                     <motion.div key={index} variants={variants} className="pt-0 px-8 pb-16 relative">
-                        <StyledDecoration />
-                        {/* <div className="flex flex-col">
-                                <StyledImageOuterWrapper className="relative overflow-hidden rounded-md">
-                                    <StyledImageInnerWrapper className="w-full overflow-hidden rounded-[3px]">
-                                        <StyledImage
-                                            src={role.image}
-                                            alt={role.institution}
-                                            width={65}
-                                            height={65}
-                                            className="absolute h-full w-full aspect-square"
-                                        />
-                                    </StyledImageInnerWrapper>
-                                </StyledImageOuterWrapper>
-                            </div> */}
+                        {role.image ? (
+                            <StyledImage src={role.image} alt={role.institution} width={24} height={24} />
+                        ) : (
+                            <StyledDecoration />
+                        )}
                         <StyledRoleTitle className="text-xl font-medium mb-3">{role.role}</StyledRoleTitle>
                         <div className="flex flex-wrap items-baseline text-sm font-medium mb-3 opacity-50 uppercase">
                             <StyledInstitution className="mr-4 backdrop-opacity-75 py-1 px-2">
