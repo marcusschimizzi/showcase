@@ -1,0 +1,62 @@
+[
+    {
+        "name": "React",
+        "level": "90%",
+        "category": "Frameworks"
+    },
+    {
+        "name": "Node.js",
+        "level": "80%",
+        "category": "Frameworks"
+    },
+    {
+        "name": "MongoDB",
+        "level": "50%",
+        "category": "Databases"
+    },
+    {
+        "name": "Express",
+        "level": "80%",
+        "category": "Frameworks"
+    },
+    {
+        "name": "JavaScript",
+        "level": "90%",
+        "category": "Languages"
+    },
+    {
+        "name": "TypeScript",
+        "level": "80%",
+        "category": "Languages"
+    },
+    {
+        "name": "Golang",
+        "level": "40%",
+        "category": "Languages"
+    },
+    {
+        "name": "Python",
+        "level": "60%",
+        "category": "Languages"
+    },
+    {
+        "name": "Docker",
+        "level": "40%",
+        "category": "Tools"
+    },
+    {
+        "name": "Git",
+        "level": "90%",
+        "category": "Tools"
+    },
+    {
+        "name": "Jest",
+        "level": "70%",
+        "category": "Tools"
+    },
+    {
+        "name": "Vue",
+        "level": "65%",
+        "category": "Frameworks"
+    }
+]
