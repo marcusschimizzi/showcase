@@ -21,6 +21,22 @@ export const metadata: Metadata = {
     applicationName: 'Marcus Schimizzi',
     creator: 'Marcus Schimizzi',
     publisher: 'Marcus Schimizzi',
+    openGraph: {
+        title: 'Marcus Schimizzi',
+        description: 'Personal website and portfolio for Marcus Schimizzi.',
+        type: 'website',
+        url: 'https://schimizzi.io',
+        locale: 'en_US',
+        siteName: 'Marcus Schimizzi',
+        images: [
+            {
+                url: 'https://schimizzi.io/images/portrait.jpg',
+                width: 800,
+                height: 600,
+                alt: 'Marcus Schimizzi',
+            },
+        ],
+    },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
