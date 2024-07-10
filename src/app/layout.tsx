@@ -1,13 +1,13 @@
 import './globals.css';
 import type { Metadata, Viewport } from 'next';
-import { Open_Sans } from 'next/font/google';
+import { Roboto } from 'next/font/google';
 import ThemeProvider from './ThemeProvider';
 import Nav from '@/components/Nav';
 import StyledComponentsRegistry from '@/lib/registry';
 import ApolloProvider from './ApolloProvider';
 import Fathom from '@/lib/Fathom';
 
-const openSans = Open_Sans({ subsets: ['latin'] });
+const roboto = Roboto({ weight: ['100', '400', '700'], subsets: ['latin'] });
 
 export const viewport: Viewport = {
     width: 'device-width',
@@ -42,7 +42,7 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
     return (
         <html lang="en">
-            <body className={openSans.className}>
+            <body className={roboto.className}>
                 <Fathom />
                 <StyledComponentsRegistry>
                     <ThemeProvider>

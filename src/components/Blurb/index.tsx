@@ -10,13 +10,16 @@ const StyledBlurb = styled.section<{ $background: string; $text: string }>`
 `;
 
 const StyledHeading = styled.h1`
-    font-size: 1.5rem;
+    font-size: 1.75rem;
     font-weight: 700;
     margin-bottom: 1.5rem;
 `;
 
 const StyledParagraph = styled.p`
     margin-bottom: 1.5rem;
+    font-size: 1.2rem;
+    line-height: 1.5;
+    letter-spacing: 0.15px;
 `;
 
 export default function Blurb() {
@@ -55,13 +58,13 @@ export default function Blurb() {
     return (
         <StyledBlurb $background={colors.background1} $text={colors.text} className="my-40" ref={sectionRef} id="about">
             <motion.div
-                className="mx-4 lg:mx-auto flex flex-col md:flex-row items-start justify-between md:justify-around w-100 md:w-9/12 pt-3 md:py-0"
+                className="mx-4 lg:mx-auto flex flex-col lg:flex-row items-start justify-between lg:justify-around w-100 lg:w-9/12 pt-3 lg:py-0"
                 variants={containerVariants}
                 initial="hidden"
                 animate={control}
             >
                 <motion.div
-                    className="w-[256px] lg:w-96 px-3 md:px-6 border-4 aspect-square rounded-md overflow-hidden mb-12 md:mb-0"
+                    className="w-[256px] lg:w-96 px-3 lg:px-6 border-4 aspect-square rounded-md overflow-hidden mx-auto lg:mx-0 mb-20 lg:mb-0"
                     variants={childrenVariants}
                     style={{
                         backgroundImage: 'url(/images/portrait.jpg)',
@@ -71,7 +74,7 @@ export default function Blurb() {
                     }}
                 ></motion.div>
                 <motion.div
-                    className="px-3 md:px-6 font-sans text-md md:text-lg max-w-prose"
+                    className="px-3 lg:px-6 font-sans text-md lg:text-lg max-w-prose mx-auto lg:mx-0"
                     variants={childrenVariants}
                 >
                     <StyledHeading>Who am I?</StyledHeading>
