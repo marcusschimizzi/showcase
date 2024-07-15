@@ -26,7 +26,7 @@ export default function Blurb() {
     const { colors } = useTheme();
     const sectionRef = useRef<HTMLDivElement>(null);
     const control = useAnimation();
-    const inView = useInView(sectionRef, { once: true, amount: 0.5 });
+    const inView = useInView(sectionRef, { once: true, amount: 0.3 });
 
     const containerVariants = {
         hidden: {},
