@@ -16,7 +16,7 @@ const SkillsPage = () => {
     return (
         <StyledSkills className="py-40 text-center" id="skills">
             <StyledHeader className="text-5xl">Skills</StyledHeader>
-            <div className="mx-auto h-[50vh] max-w-4xl mt-24">
+            <div className="mx-auto h-[50vh] max-w-6xl mt-24">
                 <Bubbles />
             </div>
         </StyledSkills>

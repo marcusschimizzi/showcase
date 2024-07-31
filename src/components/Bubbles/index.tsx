@@ -1,23 +1,30 @@
 'use client';
-import { mean, rollup } from 'd3-array';
 import { drag as d3Drag } from 'd3-drag';
 import {
     Force,
     forceCenter,
-    ForceCollide,
     forceCollide,
-    ForceManyBody,
     forceManyBody,
     forceSimulation,
+    forceX,
     forceY,
     Simulation,
     SimulationNodeDatum,
 } from 'd3-force';
-import { ScaleOrdinal, scaleOrdinal } from 'd3-scale';
+import { scaleOrdinal } from 'd3-scale';
 import { schemeSet2 } from 'd3-scale-chromatic';
 import { select } from 'd3-selection';
-import React, { ComponentType, MouseEvent, useCallback, useEffect, useRef, useState } from 'react';
-import { useSpring, animated, useTrail } from 'react-spring';
+import React, { MouseEvent, useCallback, useEffect, useRef, useState, ComponentType } from 'react';
+import { useSpring, animated, config } from 'react-spring';
+
+interface Skill {
+    name: string;
+    category: string;
+    proficiency: number;
+    description?: string;
+    projects?: string[];
+    experience?: string;
+}
 
 const skills: Skill[] = [
     {
@@ -86,12 +93,6 @@ const colorScale = scaleOrdinal<string>()
     .domain(skills.map((skill) => skill.category))
     .range(schemeSet2);
 
-interface Skill {
-    name: string;
-    category: string;
-    proficiency: number;
-}
-
 interface Node extends Skill {
     radius: number;
     x: number;
@@ -104,138 +105,148 @@ interface Node extends Skill {
 }
 
 type SimulationNode = Node & SimulationNodeDatum;
-type ClusterForce = Force<SimulationNode, undefined> & {
-    strength: (strength: number) => ClusterForce;
-    selectedCategory: (category: string | null) => ClusterForce;
+
+interface LegendItemProps {
+    category: string;
+    color: string;
+    isSelected: boolean;
+    onClick: () => void;
+}
+
+const LegendItem: ComponentType<LegendItemProps> = ({ category, color, isSelected, onClick }) => {
+    return (
+        <div className={`flex items-center cursor-pointer p-2 ${isSelected ? 'font-bold' : ''}`} onClick={onClick}>
+            <div
+                className="w-4 h-4 rounded-sm mr-2 transition-transform"
+                style={{
+                    transform: `scale(${isSelected ? 1.2 : 1})`,
+                    backgroundColor: color,
+                }}
+            />
+            <span>{category}</span>
+        </div>
+    );
 };
 
-const categories = [...new Set(skills.map((skill) => skill.category))];
+interface LegendProps {
+    categories: string[];
+    colorScale: (category: string) => string;
+    selectedCategories: Set<string>;
+    onCategoryClick: (category: string) => void;
+}
+
+const Legend: ComponentType<LegendProps> = ({ categories, colorScale, selectedCategories, onCategoryClick }) => {
+    return (
+        <div className="bg-gray-950 p-4 rounded shadow w-[99%] md:w-[90%] mx-auto">
+            <div className="flex flex-col items-center justify-between mb-4">
+                <h3 className="text-lg font-bold mb-2">Skill categories</h3>
+                <div className="flex flex-wrap">
+                    {categories.map((category) => (
+                        <LegendItem
+                            key={category}
+                            category={category}
+                            color={colorScale(category)}
+                            isSelected={selectedCategories.has(category)}
+                            onClick={() => onCategoryClick(category)}
+                        />
+                    ))}
+                </div>
+            </div>
+        </div>
+    );
+};
 
 interface BubbleProps {
     node: Node;
-    simulation: Simulation<SimulationNode, undefined>;
+    simulation: Simulation<SimulationNode, undefined> | null;
     onHover: (hoverIndex: number | null) => void;
     isHovered: boolean;
+    isActive: boolean;
 }
 
-const Bubble = ({ node, simulation, onHover, isHovered }: BubbleProps) => {
-    const [{ scale, opacity }, api] = useSpring(() => ({
-        scale: 1,
-        opacity: 0.7,
-        config: { mass: 1, tension: 300, friction: 20 },
-    }));
+const Bubble = ({ node, simulation, onHover, isHovered, isActive }: BubbleProps) => {
+    const nodeRef = useRef<SVGGElement | null>(null);
 
-    console.info('Bubble', node);
+    const [springProps, api] = useSpring(() => ({
+        scale: 1,
+        opacity: isActive ? 0.9 : 0.3,
+        x: node.x,
+        y: node.y,
+        config: { ...config.wobbly, velocity: 10 },
+    }));
 
     useEffect(() => {
         api.start({
-            scale: isHovered ? 1.1 : 1,
-            opacity: isHovered ? 1 : 0.7,
+            scale: isHovered ? 1.2 : 1,
+            opacity: isActive ? 1 : 0.3,
         });
-    }, [isHovered]);
+    }, [isHovered, isActive, api]);
 
-    const handleMouseDown = useCallback(
-        (event: MouseEvent<SVGElement>) => {
-            const draggedNode = simulation.find(event.clientX, event.clientY);
-            if (!draggedNode) return;
+    useEffect(() => {
+        api.start({
+            x: node.x,
+            y: node.y,
+        });
+    }, [node.x, node.y, api]);
 
-            const drag = d3Drag<SVGElement, unknown>()
-                .on('drag', (event) => {
-                    draggedNode.fx = event.x;
-                    draggedNode.fy = event.y;
-                    simulation.alpha(1).restart();
-                })
-                .on('end', () => {
-                    draggedNode.fx = null;
-                    draggedNode.fy = null;
-                });
+    useEffect(() => {
+        if (!simulation || !nodeRef.current) return;
+        const nodeCopy = nodeRef.current;
 
-            drag(select(event.currentTarget));
-        },
-        [simulation],
-    );
+        const drag = d3Drag<SVGGElement, unknown>()
+            .subject(() => ({ x: node.x, y: node.y }))
+            .on('start', (event) => {
+                if (!event.active) simulation.alphaTarget(0.3).restart();
+                node.fx = node.x;
+                node.fy = node.y;
+            })
+            .on('drag', (event) => {
+                node.fx = event.x;
+                node.fy = event.y;
+            })
+            .on('end', (event) => {
+                if (!event.active) simulation.alphaTarget(0);
+                node.fx = null;
+                node.fy = null;
+            });
+
+        select(nodeRef.current).call(drag);
+
+        return () => {
+            select(nodeCopy).on('.drag', null);
+        };
+    }, [simulation, node]);
 
     return (
         <animated.g
-            transform={scale.to((s) => `translate(${node.x}, ${node.y}) scale(${s})`)}
+            style={{
+                transform: springProps.scale.to(
+                    (s) => `translate(${springProps.x.get()}px, ${springProps.y.get()}px) scale(${s})`,
+                ),
+                opacity: springProps.opacity,
+            }}
             onMouseEnter={() => {
                 onHover(node.index);
             }}
             onMouseLeave={() => {
                 onHover(null);
             }}
-            onMouseDown={handleMouseDown}
+            ref={nodeRef}
         >
-            <animated.circle
-                r={node.radius}
-                fill={colorScale(node.category) as string}
-                opacity={opacity as any}
-                className="cursor-pointer"
-            />
-            <animated.text textAnchor="middle" dy=".3em" fontSize={node.radius / 3} fill="white" pointerEvents="none">
+            <circle r={node.radius} fill={colorScale(node.category)} className="cursor-grab" />
+            <text textAnchor="middle" dy=".3em" fontSize={node.radius / 3} fill="white" pointerEvents="none">
                 {node.name}
-            </animated.text>
+            </text>
         </animated.g>
-    );
-};
-
-interface LegendProps {
-    categories: string[];
-    colorScale: ScaleOrdinal<string, string>;
-    activeCategory: string | null;
-    setActiveCategory: (category: string | null) => void;
-}
-
-const Legend: ComponentType<LegendProps> = ({ categories, colorScale, activeCategory, setActiveCategory }) => {
-    return (
-        <div className="absolute top-4 left-4 bg-gray-950 p-4 rounded shadow">
-            <h3 className="font-bold mb-2">Categories</h3>
-            {categories.map((category) => (
-                <div
-                    key={category}
-                    className="flex items-center mb-1 cursor-pointer"
-                    onClick={() => setActiveCategory(activeCategory === category ? null : category)}
-                >
-                    <div className="w-4 h-4 mr-2 rounded-full" style={{ backgroundColor: colorScale(category) }} />
-                    <span className={category === activeCategory ? 'font-bold' : ''}>{category}</span>
-                </div>
-            ))}
-        </div>
     );
 };
 
 const AnimatedBubbles = () => {
     const [nodes, setNodes] = useState<Node[]>([]);
-    const [selectedSkill, setSelectedSkill] = useState<Node | null>(null);
     const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
-    const [activeCategory, setActiveCategory] = useState<string | null>(null);
-    const [isIntroAnimationComplete, setIsIntroAnimationComplete] = useState(false);
+    const [selectedCategories, setSelectedCategories] = useState<Set<string>>(new Set());
     const simulationRef = useRef<Simulation<Node, undefined> | null>(null);
     const containerRef = useRef<HTMLDivElement | null>(null);
-
-    // const handleResize = useCallback(() => {
-    //     if (simulationRef.current && containerRef.current) {
-    //         console.info('handleResize');
-    //         const { width, height } = containerRef.current.getBoundingClientRect();
-    //         simulationRef.current
-    //             .force('center', forceCenter(width / 2, height / 2))
-    //             .force('bounds', forceBounds(width, height))
-    //             .alpha(0.9)
-    //             .restart();
-
-    //         // const minDimension = Math.min(width, height);
-    //         // const scaleFactor = minDimension / 800;
-    //         // console.info('scaleFactor', scaleFactor);
-
-    //         setNodes((currentNodes) =>
-    //             currentNodes.map((node, index) => ({
-    //                 ...node,
-    //                 index,
-    //                 radius: node.proficiency * 50 * 1 + 20,
-    //             })),
-    //         );
-    //     }
-    // }, []);
 
     const forceBounds = (width: number, height: number) => {
         return () => {
@@ -248,54 +259,14 @@ const AnimatedBubbles = () => {
         };
     };
 
-    // const forceCluster = useCallback(() => {
-    //     let strength = 0.2;
-    //     let nodes: SimulationNode[] = [];
-    //     let selectedCategory: string | null = null;
-
-    //     function force(alpha: number) {
-    //         if (!selectedCategory) return;
-
-    //         const categoryNodes = nodes.filter((d) => d.category === selectedCategory);
-    //         const centroid = {
-    //             x: mean(categoryNodes, (d) => d.x) ?? 0,
-    //             y: mean(categoryNodes, (d) => d.y) ?? 0,
-    //         };
-
-    //         const l = alpha * strength;
-    //         for (const d of categoryNodes) {
-    //             if (typeof d.x === 'number' && typeof d.y === 'number') {
-    //                 d.vx = (d.vx ?? 0) - (d.x - centroid.x) * l;
-    //                 d.vy = (d.vy ?? 0) - (d.y - centroid.y) * l;
-    //             }
-    //         }
-    //     }
-
-    //     force.initialize = (_nodes: SimulationNode[]) => (nodes = _nodes);
-
-    //     (force as any).strength = (s: number) => {
-    //         strength = s;
-    //         return force;
-    //     };
-
-    //     (force as any).selectedCategory = (category: string | null) => {
-    //         selectedCategory = category;
-    //         return force;
-    //     };
-
-    //     return force as unknown as ClusterForce;
-    // }, []);
-
     useEffect(() => {
         if (!containerRef.current) return;
-        const width = containerRef.current?.clientWidth ?? 500;
-        const height = containerRef.current?.clientHeight ?? 500;
+        const width = containerRef.current.clientWidth ?? 500;
+        const height = containerRef.current.clientHeight ?? 500;
 
         const simulation = forceSimulation(nodes)
             .force('charge', forceManyBody<SimulationNode>().strength(80))
-            // .force('charge', forceY(0).strength(0.1))
             .force('center', forceCenter(width / 2, height / 2))
-            // .force('cluster', forceCluster().strength(0.5))
             .force(
                 'collide',
                 forceCollide<SimulationNode>().radius((d) => (d as Node).radius + 2),
@@ -309,122 +280,109 @@ const AnimatedBubbles = () => {
             ...skill,
             radius: skill.proficiency * 50 + 20,
             index,
-            x: width * Math.random(),
-            y: height * Math.random(),
+            // Keep random initial positions sort of around the middle
+            x: Math.random() * width * 0.5 + width * 0.25,
+            y: Math.random() * height * 0.5 + height * 0.25,
         }));
 
         setNodes(initialNodes);
         simulation.nodes(initialNodes);
         simulationRef.current = simulation;
 
-        // const resizeObserver = new ResizeObserver(handleResize);
-        // if (containerRef.current) {
-        //     resizeObserver.observe(containerRef.current);
-        // }
-
-        // handleResize();
-
         return () => {
             simulation.stop();
-            // resizeObserver.disconnect();
         };
     }, []);
 
-    // useEffect(() => {
-    //     if (simulationRef.current && nodes.length > 0) {
-    //         simulationRef.current.nodes(nodes as SimulationNode[]);
-    //         const clusterForce = simulationRef.current.force('cluster') as ClusterForce | undefined;
+    useEffect(() => {
+        if (!simulationRef.current || !containerRef.current) return;
 
-    //         if (clusterForce) {
-    //             clusterForce.selectedCategory(activeCategory);
-    //             clusterForce.strength(activeCategory ? 0.1 : 0);
-    //         }
+        const simulation = simulationRef.current;
+        const width = containerRef.current.clientWidth;
+        const height = containerRef.current.clientHeight;
 
-    //         simulationRef.current.alpha(1).restart();
-    //     }
-    // }, [nodes, activeCategory]);
+        if (selectedCategories.size > 0) {
+            const categories = Array.from(selectedCategories);
+            const angleStep = (2 * Math.PI) / categories.length;
 
-    // const handleClick = (node: Node) => {
-    //     setSelectedSkill(node);
-    // };
+            // Group selected category nodes
+            simulation.force(
+                'x',
+                forceX<SimulationNode>()
+                    .strength(0.3)
+                    .x((d: SimulationNode) => {
+                        if (selectedCategories.has(d.category)) {
+                            const index = categories.indexOf(d.category);
+                            return width / 2 + Math.cos(index * angleStep) * 300;
+                        }
+                        return width / 2;
+                    }),
+            );
+            simulation.force(
+                'y',
+                forceY<SimulationNode>()
+                    .strength(0.3)
+                    .y((d: SimulationNode) => {
+                        if (selectedCategories.has(d.category)) {
+                            const index = categories.indexOf(d.category);
+                            return height / 2 + Math.sin(index * angleStep) * 300;
+                        }
+                        return height / 2;
+                    }),
+            );
+        } else {
+            simulation.force('x', null);
+            simulation.force('y', null);
+            simulation.force('center', forceCenter(width / 2, height / 2));
+        }
+
+        simulation.alpha(0.3).restart();
+    }, [selectedCategories]);
 
     const handleHover = (index: number | null) => {
         setHoveredIndex(index);
     };
 
-    // const trail = useTrail(nodes.length, {
-    //     from: { opacity: 0, radius: 0 },
-    //     to: { radius: 1, opacity: 1 },
-    //     config: { mass: 5, tension: 300, friction: 200 },
-    //     onRest: () => {
-    //         if (!isIntroAnimationComplete) {
-    //             setIsIntroAnimationComplete(true);
-    //             // handleResize();
-    //         }
-    //     },
-    // });
+    const handleCategoryClick = useCallback((category: string) => {
+        setSelectedCategories((prev) => {
+            const newSet = new Set(prev);
+            if (newSet.has(category)) {
+                newSet.delete(category);
+            } else {
+                newSet.add(category);
+            }
+            return newSet;
+        });
+    }, []);
+
+    const categories = Array.from(new Set(skills.map((skill) => skill.category)));
 
     return (
         <div ref={containerRef} className="relative w-full h-full bg-transparent">
             <svg className="w-full h-full">
-                {/* {!isIntroAnimationComplete && (
-                    <g>
-                        {trail.map((props, index) => (
-                            <animated.g
-                                className="trails"
-                                key={index}
-                                transform={`translate(${nodes[index].x}, ${nodes[index].y})`}
-                                style={{ opacity: props.opacity }}
-                            >
-                                <animated.circle
-                                    r={props.radius.to((r) => r * (nodes[index].proficiency * 50 + 20))}
-                                    fill={colorScale(nodes[index].category)}
-                                />
-                                <animated.text
-                                    textAnchor="middle"
-                                    dy=".3em"
-                                    fontSize={props.radius.to((r) => (r * (nodes[index].proficiency * 50 + 20)) / 3)}
-                                    fill="white"
-                                    pointerEvents="none"
-                                >
-                                    {nodes[index].name}
-                                </animated.text>
-                            </animated.g>
-                        ))}
-                    </g>
-                )}
-                {isIntroAnimationComplete && simulationRef.current && ( */}
                 <>
                     <g>
                         {nodes
                             .sort((a, b) => (hoveredIndex === a.index ? 1 : hoveredIndex === b.index ? -1 : 0))
-                            .map((node, index) => (
+                            .map((node) => (
                                 <Bubble
-                                    key={index}
+                                    key={node.index}
                                     node={node}
-                                    // onClick={handleClick}
                                     onHover={handleHover}
-                                    simulation={simulationRef.current as Simulation<SimulationNode, undefined>}
+                                    simulation={simulationRef.current}
                                     isHovered={hoveredIndex === node.index}
+                                    isActive={selectedCategories.size === 0 || selectedCategories.has(node.category)}
                                 />
                             ))}
                     </g>
                 </>
-                {/* )} */}
             </svg>
-            {/* <Legend
+            <Legend
                 categories={categories}
                 colorScale={colorScale}
-                activeCategory={activeCategory}
-                setActiveCategory={setActiveCategory}
+                selectedCategories={selectedCategories}
+                onCategoryClick={handleCategoryClick}
             />
-            {selectedSkill && (
-                <div className="absolute top-4 right-4 bg-gray-500 p-4 rounded shadow text-black">
-                    <h3 className="text-lg font-bold">{selectedSkill.name}</h3>
-                    <p>Category: {selectedSkill.category}</p>
-                    <p>Proficiency: {Math.round(selectedSkill.proficiency * 100)}%</p>
-                </div>
-            )} */}
         </div>
     );
 };
