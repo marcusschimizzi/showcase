@@ -137,7 +137,7 @@ interface LegendProps {
 
 const Legend: ComponentType<LegendProps> = ({ categories, colorScale, selectedCategories, onCategoryClick }) => {
     return (
-        <div className="bg-gray-950 p-4 rounded shadow w-[99%] md:w-[90%] mx-auto">
+        <div className="bg-transparent p-4 rounded w-[99%] md:w-[90%] mx-auto">
             <div className="flex flex-col items-center justify-between mb-4">
                 <h3 className="text-lg font-bold mb-2">Skill categories</h3>
                 <div className="flex flex-wrap">
