@@ -162,9 +162,10 @@ interface BubbleProps {
     onHover: (hoverIndex: number | null) => void;
     isHovered: boolean;
     isActive: boolean;
+    containerSize: { width: number; height: number };
 }
 
-const Bubble = ({ node, simulation, onHover, isHovered, isActive }: BubbleProps) => {
+const Bubble = ({ node, simulation, onHover, isHovered, isActive, containerSize }: BubbleProps) => {
     const nodeRef = useRef<SVGGElement | null>(null);
 
     const [springProps, api] = useSpring(() => ({
@@ -201,8 +202,12 @@ const Bubble = ({ node, simulation, onHover, isHovered, isActive }: BubbleProps)
                 node.fy = node.y;
             })
             .on('drag', (event) => {
-                node.fx = event.x;
-                node.fy = event.y;
+                // Keep nodes within bounds
+                const x = Math.max(node.radius, Math.min(containerSize.width - node.radius, event.x));
+                const y = Math.max(node.radius, Math.min(containerSize.height - node.radius, event.y));
+                node.fx = x;
+                node.fy = y;
+                api.start({ x, y });
             })
             .on('end', (event) => {
                 if (!event.active) simulation.alphaTarget(0);
@@ -215,7 +220,7 @@ const Bubble = ({ node, simulation, onHover, isHovered, isActive }: BubbleProps)
         return () => {
             select(nodeCopy).on('.drag', null);
         };
-    }, [simulation, node]);
+    }, [simulation, node, containerSize]);
 
     return (
         <animated.g
@@ -241,12 +246,72 @@ const Bubble = ({ node, simulation, onHover, isHovered, isActive }: BubbleProps)
     );
 };
 
-const AnimatedBubbles = () => {
+interface AnimatedBubblesProps {
+    renderOnlyInViewport?: boolean;
+}
+
+const AnimatedBubbles: ComponentType<AnimatedBubblesProps> = ({ renderOnlyInViewport = true }) => {
     const [nodes, setNodes] = useState<Node[]>([]);
     const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
     const [selectedCategories, setSelectedCategories] = useState<Set<string>>(new Set());
+    const [scaleFactor, setScaleFactor] = useState(1);
+    const [containerSize, setContainerSize] = useState({ width: 0, height: 0 });
+    const [isInViewport, setIsInViewport] = useState(!renderOnlyInViewport);
     const simulationRef = useRef<Simulation<Node, undefined> | null>(null);
     const containerRef = useRef<HTMLDivElement | null>(null);
+
+    const updateSimulation = useCallback(() => {
+        if (simulationRef.current && containerSize.width > 0 && containerSize.height > 0) {
+            simulationRef.current
+                .force('center', forceCenter(containerSize.width / 2, containerSize.height / 2))
+                .force(
+                    'collision',
+                    forceCollide().radius((d) => (d as Node).radius + 2),
+                )
+                .force('x', forceX(containerSize.width / 2).strength(0.1))
+                .force('y', forceY(containerSize.height / 2).strength(0.1))
+                .alpha(1)
+                .restart();
+        }
+    }, [containerSize]);
+
+    useEffect(() => {
+        if (!containerRef.current || !renderOnlyInViewport) return;
+
+        const observer = new IntersectionObserver(
+            ([entry]) => {
+                setIsInViewport(entry.isIntersecting);
+            },
+            {
+                root: null,
+                rootMargin: '0px',
+                threshold: 0.8,
+            },
+        );
+
+        observer.observe(containerRef.current);
+
+        return () => {
+            observer.disconnect();
+        };
+    }, [renderOnlyInViewport]);
+
+    useEffect(() => {
+        if (!containerRef.current) return;
+
+        const resizeObserver = new ResizeObserver((entries) => {
+            for (let entry of entries) {
+                const { width, height } = entry.contentRect;
+                setContainerSize({ width, height });
+            }
+        });
+
+        resizeObserver.observe(containerRef.current);
+
+        return () => {
+            resizeObserver.disconnect();
+        };
+    }, []);
 
     const forceBounds = (width: number, height: number) => {
         return () => {
@@ -260,29 +325,28 @@ const AnimatedBubbles = () => {
     };
 
     useEffect(() => {
-        if (!containerRef.current) return;
-        const width = containerRef.current.clientWidth ?? 500;
-        const height = containerRef.current.clientHeight ?? 500;
+        if (!containerRef.current || containerSize.width === 0 || containerSize.height === 0) return;
 
         const simulation = forceSimulation(nodes)
             .force('charge', forceManyBody<SimulationNode>().strength(80))
-            .force('center', forceCenter(width / 2, height / 2))
+            .force('center', forceCenter(containerSize.width / 2, containerSize.height / 2))
             .force(
-                'collide',
+                'collision',
                 forceCollide<SimulationNode>().radius((d) => (d as Node).radius + 2),
             )
-            .force('bounds', forceBounds(width, height))
+            .force('x', forceX(containerSize.width / 2).strength(0.1))
+            .force('y', forceY(containerSize.height / 2).strength(0.1))
             .on('tick', () => {
                 setNodes((currentNodes) => [...currentNodes]);
             });
 
         const initialNodes = skills.map((skill, index) => ({
             ...skill,
-            radius: skill.proficiency * 50 + 20,
+            radius: skill.proficiency * 50 * scaleFactor + 20,
             index,
             // Keep random initial positions sort of around the middle
-            x: Math.random() * width * 0.5 + width * 0.25,
-            y: Math.random() * height * 0.5 + height * 0.25,
+            x: Math.random() * containerSize.width * 0.5 + containerSize.width * 0.25,
+            y: Math.random() * containerSize.height * 0.5 + containerSize.height * 0.25,
         }));
 
         setNodes(initialNodes);
@@ -292,7 +356,11 @@ const AnimatedBubbles = () => {
         return () => {
             simulation.stop();
         };
-    }, []);
+    }, [containerSize]);
+
+    useEffect(() => {
+        updateSimulation();
+    }, [updateSimulation, selectedCategories]);
 
     useEffect(() => {
         if (!simulationRef.current || !containerRef.current) return;
@@ -359,30 +427,37 @@ const AnimatedBubbles = () => {
 
     return (
         <div ref={containerRef} className="relative w-full h-full bg-transparent">
-            <svg className="w-full h-full">
+            {isInViewport && (
                 <>
-                    <g>
-                        {nodes
-                            .sort((a, b) => (hoveredIndex === a.index ? 1 : hoveredIndex === b.index ? -1 : 0))
-                            .map((node) => (
-                                <Bubble
-                                    key={node.index}
-                                    node={node}
-                                    onHover={handleHover}
-                                    simulation={simulationRef.current}
-                                    isHovered={hoveredIndex === node.index}
-                                    isActive={selectedCategories.size === 0 || selectedCategories.has(node.category)}
-                                />
-                            ))}
-                    </g>
+                    <svg className="w-full h-full">
+                        <>
+                            <g>
+                                {nodes
+                                    .sort((a, b) => (hoveredIndex === a.index ? 1 : hoveredIndex === b.index ? -1 : 0))
+                                    .map((node) => (
+                                        <Bubble
+                                            key={node.index}
+                                            node={node}
+                                            onHover={handleHover}
+                                            simulation={simulationRef.current}
+                                            isHovered={hoveredIndex === node.index}
+                                            isActive={
+                                                selectedCategories.size === 0 || selectedCategories.has(node.category)
+                                            }
+                                            containerSize={containerSize}
+                                        />
+                                    ))}
+                            </g>
+                        </>
+                    </svg>
+                    <Legend
+                        categories={categories}
+                        colorScale={colorScale}
+                        selectedCategories={selectedCategories}
+                        onCategoryClick={handleCategoryClick}
+                    />
                 </>
-            </svg>
-            <Legend
-                categories={categories}
-                colorScale={colorScale}
-                selectedCategories={selectedCategories}
-                onCategoryClick={handleCategoryClick}
-            />
+            )}
         </div>
     );
 };
