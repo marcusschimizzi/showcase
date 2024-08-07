@@ -17,6 +17,8 @@ import { select } from 'd3-selection';
 import React, { MouseEvent, useCallback, useEffect, useRef, useState, ComponentType } from 'react';
 import { useSpring, animated, config } from 'react-spring';
 import skillsData from '@/data/skills.json';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTimes } from '@fortawesome/free-solid-svg-icons';
 
 interface Skill {
     name: string;
@@ -129,7 +131,7 @@ const SidePanel: ComponentType<SidePanelProps> = ({ skill, onClose }) => {
             <div className="flex justify-between items-center p-4">
                 <h3 className="text-lg font-bold">{skill.name}</h3>
                 <button onClick={onClose} className="text-lg font-bold">
-                    Close
+                    <FontAwesomeIcon icon={faTimes} />
                 </button>
             </div>
             {isSkill(skill) && (
@@ -486,7 +488,7 @@ const AnimatedBubbles: ComponentType<AnimatedBubblesProps> = ({ renderOnlyInView
             <div
                 className={`${
                     selectedSkill ? 'w-full md:w-1/3' : 'w-0'
-                } transition-all bg-black bg-opacity-10 absolute top-0 right-0 h-full overflow-y-auto rounded-lg shadow`}
+                } transition-all bg-black bg-opacity-95 md:bg-opacity-10 absolute top-0 right-0 h-full overflow-y-auto rounded-lg shadow`}
             >
                 <SidePanel skill={selectedSkill} onClose={() => setSelectedSkill(null)} />
             </div>
