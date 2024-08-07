@@ -16,6 +16,7 @@ import { schemeSet2 } from 'd3-scale-chromatic';
 import { select } from 'd3-selection';
 import React, { MouseEvent, useCallback, useEffect, useRef, useState, ComponentType } from 'react';
 import { useSpring, animated, config } from 'react-spring';
+import skillsData from '@/data/skills.json';
 
 interface Skill {
     name: string;
@@ -26,68 +27,12 @@ interface Skill {
     experience?: string;
 }
 
-const skills: Skill[] = [
-    {
-        name: 'React',
-        category: 'Frontend',
-        proficiency: 0.9,
-    },
-    {
-        name: 'TypeScript',
-        category: 'Language',
-        proficiency: 0.8,
-    },
-    {
-        name: 'Node.js',
-        category: 'Backend',
-        proficiency: 0.7,
-    },
-    {
-        name: 'D3.js',
-        category: 'Data Visualization',
-        proficiency: 0.6,
-    },
-    {
-        name: 'Python',
-        category: 'Language',
-        proficiency: 0.5,
-    },
-    {
-        name: 'SQL',
-        category: 'Database',
-        proficiency: 0.4,
-    },
-    {
-        name: 'Docker',
-        category: 'DevOps',
-        proficiency: 0.5,
-    },
-    {
-        name: 'Golang',
-        category: 'Language',
-        proficiency: 0.3,
-    },
-    {
-        name: 'Jest',
-        category: 'Testing',
-        proficiency: 0.6,
-    },
-    {
-        name: 'MongoDB',
-        category: 'Database',
-        proficiency: 0.4,
-    },
-    {
-        name: 'Rust',
-        category: 'Language',
-        proficiency: 0.2,
-    },
-    {
-        name: 'Git',
-        category: 'DevOps',
-        proficiency: 0.7,
-    },
-];
+interface Category {
+    name: string;
+    color: string;
+}
+
+const skills: Skill[] = skillsData;
 
 const colorScale = scaleOrdinal<string>()
     .domain(skills.map((skill) => skill.category))
@@ -115,7 +60,10 @@ interface LegendItemProps {
 
 const LegendItem: ComponentType<LegendItemProps> = ({ category, color, isSelected, onClick }) => {
     return (
-        <div className={`flex items-center cursor-pointer p-2 ${isSelected ? 'font-bold' : ''}`} onClick={onClick}>
+        <div
+            className={`flex items-center cursor-pointer p-2 ${isSelected ? 'underline' : 'no-underline'}`}
+            onClick={onClick}
+        >
             <div
                 className="w-4 h-4 rounded-sm mr-2 transition-transform"
                 style={{
@@ -137,9 +85,8 @@ interface LegendProps {
 
 const Legend: ComponentType<LegendProps> = ({ categories, colorScale, selectedCategories, onCategoryClick }) => {
     return (
-        <div className="bg-transparent p-4 rounded w-[99%] md:w-[90%] mx-auto">
+        <div className="bg-transparent p-4 rounded w-[99%] md:w-[90%] mx-auto transition-all">
             <div className="flex flex-col items-center justify-between mb-4">
-                <h3 className="text-lg font-bold mb-2">Skill categories</h3>
                 <div className="flex flex-wrap">
                     {categories.map((category) => (
                         <LegendItem
@@ -156,16 +103,63 @@ const Legend: ComponentType<LegendProps> = ({ categories, colorScale, selectedCa
     );
 };
 
+interface SidePanelProps {
+    skill: Skill | Category | null;
+    onClose: () => void;
+}
+
+const SidePanel: ComponentType<SidePanelProps> = ({ skill, onClose }) => {
+    if (!skill) {
+        return null;
+    }
+
+    function isSkill(skill: Skill | Category): skill is Skill {
+        return (skill as Skill).proficiency !== undefined;
+    }
+
+    return (
+        <div
+            className="bg-black bg-opacity-10 shadow h-full overflow-hidden"
+            style={{
+                borderColor: isSkill(skill) ? colorScale(skill.category) : 'transparent',
+                borderWidth: '2px',
+                borderStyle: 'solid',
+            }}
+        >
+            <div className="flex justify-between items-center p-4">
+                <h3 className="text-lg font-bold">{skill.name}</h3>
+                <button onClick={onClose} className="text-lg font-bold">
+                    Close
+                </button>
+            </div>
+            {isSkill(skill) && (
+                <div className="p-4">
+                    <p className="text-sm">{skill.description}</p>
+                    <ul className="list-disc list-inside">
+                        {skill.projects?.map((project) => (
+                            <li key={project} className="text-sm">
+                                {project}
+                            </li>
+                        ))}
+                    </ul>
+                    <p className="text-sm">{skill.experience}</p>
+                </div>
+            )}
+        </div>
+    );
+};
+
 interface BubbleProps {
     node: Node;
     simulation: Simulation<SimulationNode, undefined> | null;
     onHover: (hoverIndex: number | null) => void;
+    onSkillClick: (event: MouseEvent<SVGGElement>, node: Node) => void;
     isHovered: boolean;
     isActive: boolean;
     containerSize: { width: number; height: number };
 }
 
-const Bubble = ({ node, simulation, onHover, isHovered, isActive, containerSize }: BubbleProps) => {
+const Bubble = ({ node, simulation, onHover, onSkillClick, isHovered, isActive, containerSize }: BubbleProps) => {
     const nodeRef = useRef<SVGGElement | null>(null);
 
     const [springProps, api] = useSpring(() => ({
@@ -203,8 +197,8 @@ const Bubble = ({ node, simulation, onHover, isHovered, isActive, containerSize 
             })
             .on('drag', (event) => {
                 // Keep nodes within bounds
-                const x = Math.max(node.radius, Math.min(containerSize.width - node.radius, event.x));
-                const y = Math.max(node.radius, Math.min(containerSize.height - node.radius, event.y));
+                const x = Math.max(node.radius + 10, Math.min(containerSize.width - node.radius, event.x));
+                const y = Math.max(node.radius + 10, Math.min(containerSize.height - node.radius, event.y));
                 node.fx = x;
                 node.fy = y;
                 api.start({ x, y });
@@ -236,6 +230,9 @@ const Bubble = ({ node, simulation, onHover, isHovered, isActive, containerSize 
             onMouseLeave={() => {
                 onHover(null);
             }}
+            onClick={(event) => {
+                onSkillClick(event, node);
+            }}
             ref={nodeRef}
         >
             <circle r={node.radius} fill={colorScale(node.category)} className="cursor-grab" />
@@ -257,6 +254,7 @@ const AnimatedBubbles: ComponentType<AnimatedBubblesProps> = ({ renderOnlyInView
     const [scaleFactor, setScaleFactor] = useState(1);
     const [containerSize, setContainerSize] = useState({ width: 0, height: 0 });
     const [isInViewport, setIsInViewport] = useState(!renderOnlyInViewport);
+    const [selectedSkill, setSelectedSkill] = useState<Skill | Category | null>(null);
     const simulationRef = useRef<Simulation<Node, undefined> | null>(null);
     const containerRef = useRef<HTMLDivElement | null>(null);
 
@@ -270,6 +268,7 @@ const AnimatedBubbles: ComponentType<AnimatedBubblesProps> = ({ renderOnlyInView
                 )
                 .force('x', forceX(containerSize.width / 2).strength(0.1))
                 .force('y', forceY(containerSize.height / 2).strength(0.1))
+                .force('bounds', forceBounds(containerSize.width, containerSize.height))
                 .alpha(1)
                 .restart();
         }
@@ -336,6 +335,7 @@ const AnimatedBubbles: ComponentType<AnimatedBubblesProps> = ({ renderOnlyInView
             )
             .force('x', forceX(containerSize.width / 2).strength(0.1))
             .force('y', forceY(containerSize.height / 2).strength(0.1))
+            .force('bounds', forceBounds(containerSize.width, containerSize.height))
             .on('tick', () => {
                 setNodes((currentNodes) => [...currentNodes]);
             });
@@ -411,7 +411,16 @@ const AnimatedBubbles: ComponentType<AnimatedBubblesProps> = ({ renderOnlyInView
         setHoveredIndex(index);
     };
 
+    const handleClick = (event: MouseEvent<SVGGElement>, node: Node) => {
+        if (selectedSkill === node) {
+            setSelectedSkill(null);
+            return;
+        }
+        setSelectedSkill(node);
+    };
+
     const handleCategoryClick = useCallback((category: string) => {
+        setSelectedSkill(null);
         setSelectedCategories((prev) => {
             const newSet = new Set(prev);
             if (newSet.has(category)) {
@@ -421,44 +430,67 @@ const AnimatedBubbles: ComponentType<AnimatedBubblesProps> = ({ renderOnlyInView
             }
             return newSet;
         });
+        if (selectedCategories.size === 1) {
+            setSelectedSkill({
+                name: category,
+                color: colorScale(category),
+            });
+        }
     }, []);
 
     const categories = Array.from(new Set(skills.map((skill) => skill.category)));
 
     return (
-        <div ref={containerRef} className="relative w-full h-full bg-transparent">
-            {isInViewport && (
-                <>
-                    <svg className="w-full h-full">
-                        <>
-                            <g>
-                                {nodes
-                                    .sort((a, b) => (hoveredIndex === a.index ? 1 : hoveredIndex === b.index ? -1 : 0))
-                                    .map((node) => (
-                                        <Bubble
-                                            key={node.index}
-                                            node={node}
-                                            onHover={handleHover}
-                                            simulation={simulationRef.current}
-                                            isHovered={hoveredIndex === node.index}
-                                            isActive={
-                                                selectedCategories.size === 0 || selectedCategories.has(node.category)
-                                            }
-                                            containerSize={containerSize}
-                                        />
-                                    ))}
-                            </g>
-                        </>
-                    </svg>
-                    <Legend
-                        categories={categories}
-                        colorScale={colorScale}
-                        selectedCategories={selectedCategories}
-                        onCategoryClick={handleCategoryClick}
-                    />
-                </>
-            )}
-        </div>
+        <>
+            <div
+                ref={containerRef}
+                className={`relative ${selectedSkill ? 'w-full md:w-2/3' : 'w-full'} h-full bg-transparent`}
+            >
+                {isInViewport && (
+                    <>
+                        <Legend
+                            categories={categories}
+                            colorScale={colorScale}
+                            selectedCategories={selectedCategories}
+                            onCategoryClick={handleCategoryClick}
+                        />
+                        <svg className="w-full h-full">
+                            <>
+                                <g>
+                                    {nodes
+                                        .sort((a, b) =>
+                                            hoveredIndex === a.index ? 1 : hoveredIndex === b.index ? -1 : 0,
+                                        )
+                                        .map((node) => (
+                                            <Bubble
+                                                key={node.index}
+                                                node={node}
+                                                onHover={handleHover}
+                                                onSkillClick={handleClick}
+                                                simulation={simulationRef.current}
+                                                isHovered={hoveredIndex === node.index}
+                                                isActive={
+                                                    (selectedCategories.size === 0 && !selectedSkill) ||
+                                                    selectedCategories.has(node.category) ||
+                                                    selectedSkill?.name === node.name
+                                                }
+                                                containerSize={containerSize}
+                                            />
+                                        ))}
+                                </g>
+                            </>
+                        </svg>
+                    </>
+                )}
+            </div>
+            <div
+                className={`${
+                    selectedSkill ? 'w-full md:w-1/3' : 'w-0'
+                } transition-all bg-black bg-opacity-10 absolute top-0 right-0 h-full overflow-y-auto rounded-lg shadow`}
+            >
+                <SidePanel skill={selectedSkill} onClose={() => setSelectedSkill(null)} />
+            </div>
+        </>
     );
 };
 
