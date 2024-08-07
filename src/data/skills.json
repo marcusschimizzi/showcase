@@ -1,62 +1,138 @@
 [
     {
         "name": "React",
-        "level": 0.9,
-        "category": "Frameworks"
+        "proficiency": 0.9,
+        "category": "Frontend",
+        "description": "React has been my frontend framework of choice for the last few years. I have experience with both class-based and functional components, as well as hooks. I have also worked with Redux and Context API for state management.",
+        "projects": ["This website", "Mock My Draft"],
+        "experience": "4 years"
     },
     {
         "name": "Node.js",
-        "level": 0.8,
-        "category": "Frameworks"
+        "proficiency": 0.8,
+        "category": "Backend",
+        "description": "Node.js is my backend runtime of choice. Most of the time, I've used it with Express, but I've also worked with Fastify. I also have experience using it to build RESTful APIs and GraphQL servers.",
+        "projects": ["Mock My Draft"],
+        "experience": "4 years"
     },
     {
         "name": "MongoDB",
-        "level": 0.5,
-        "category": "Databases"
+        "proficiency": 0.5,
+        "category": "Databases",
+        "description": "MongoDB is the database I've used the most. I have experience with both the native MongoDB driver and Mongoose. I've used it to build RESTful APIs and GraphQL servers.",
+        "projects": ["Mock My Draft"],
+        "experience": "3 years"
     },
     {
         "name": "Express",
-        "level": 0.8,
-        "category": "Frameworks"
+        "proficiency": 0.8,
+        "category": "Backend",
+        "description": "Express is the backend framework I've used the most. I have experience building RESTful APIs and GraphQL servers with it.",
+        "projects": ["Mock My Draft"],
+        "experience": "4 years"
     },
     {
         "name": "JavaScript",
-        "level": 0.9,
-        "category": "Languages"
+        "proficiency": 0.9,
+        "category": "Languages",
+        "description": "JavaScript is the language I've used the most. I have experience with both ES5 and ES6, as well as TypeScript. I've used it to build frontend and backend applications.",
+        "projects": ["This website", "Mock My Draft"],
+        "experience": "6 years"
     },
     {
         "name": "TypeScript",
-        "level": 0.8,
-        "category": "Languages"
+        "proficiency": 0.8,
+        "category": "Languages",
+        "description": "TypeScript is the language I've used the most in the last few years. I have experience with both frontend and backend applications.",
+        "projects": ["This website", "Mock My Draft"],
+        "experience": "4 years"
     },
     {
         "name": "Golang",
-        "level": 0.4,
-        "category": "Languages"
+        "proficiency": 0.3,
+        "category": "Languages",
+        "description": "Golang is a language I've used sparingly, but I have experience building/maintaining a service using it from my time at Qualtrics.",
+        "projects": ["A component registry service (Qualtrics)"],
+        "experience": "1 year"
     },
     {
         "name": "Python",
-        "level": 0.6,
-        "category": "Languages"
+        "proficiency": 0.6,
+        "category": "Languages",
+        "description": "Python is a language I've used for a few projects. I used it quite a bit a few years ago. While at Qualtrics, I built an image comparison library for testing purposes in Python. More recently, I picked it up again to build a text analysis service.",
+        "projects": ["A text analysis service for Mock My Draft", "An image comparison library (Qualtrics)"],
+        "experience": "3 years"
     },
     {
         "name": "Docker",
-        "level": 0.4,
-        "category": "Tools"
+        "proficiency": 0.4,
+        "category": "DevOps",
+        "description": "Docker is a tool I've used for a few projects. I have experience building and running containers. I've also used it to build multi-container applications, such as a full-stack applications with multiple backend services, multiple frontend apps, and a database.",
+        "projects": ["Mock My Draft", "A few projects while at Qualtrics"],
+        "experience": "2 years"
     },
     {
         "name": "Git",
-        "level": 0.9,
-        "category": "Tools"
+        "proficiency": 0.85,
+        "category": "DevOps",
+        "description": "Git is the version control system I've used the most. I have experience with both GitHub and GitLab (and even BitBucket once upon a time). I've used it for both personal and professional projects.",
+        "projects": ["Basically every software project I've worked on"],
+        "experience": "6 years"
     },
     {
         "name": "Jest",
-        "level": 0.7,
-        "category": "Tools"
+        "proficiency": 0.6,
+        "category": "Testing",
+        "description": "Jest is the testing framework I've used the most for recent projects. I have experience writing unit tests and integration tests with it.",
+        "projects": ["This website", "Mock My Draft"],
+        "experience": "4 years"
     },
     {
         "name": "Vue",
-        "level": 0.65,
-        "category": "Frameworks"
+        "proficiency": 0.65,
+        "category": "Frontend",
+        "description": "Vue is a frontend framework I've used for a few projects, although not as much recently.",
+        "projects": ["Polititrack", "A small company website for a dog breeder"],
+        "experience": "3 years"
+    },
+    {
+        "name": "D3.js",
+        "proficiency": 0.75,
+        "category": "Data Visualization",
+        "description": "D3.js has been my go to library for data visualization over the last several years. I used it extensively in my time at Qualtrics to build a visualization library that was used by many teams and enabled the platform's reporting capabilities.",
+        "projects": ["A visualization library called DQ (Qualtrics)"],
+        "experience": "4.5 years"
+    },
+    {
+        "name": "SQL",
+        "proficiency": 0.4,
+        "category": "Databases",
+        "description": "I've used SQL for a few projects when they've called for relational databases. I have experience writing queries and building schemas, mostly used with Postgres.",
+        "projects": ["Mock My Draft"],
+        "experience": "2 years"
+    },
+    {
+        "name": "Rust",
+        "proficiency": 0.2,
+        "category": "Languages",
+        "description": "Rust is a language I haven't used much, but I've been learning it in my free time. I hope to use it for a project in the near future.",
+        "projects": [],
+        "experience": "1 year"
+    },
+    {
+        "name": "Svelte",
+        "proficiency": 0.3,
+        "category": "Frontend",
+        "description": "Svelte is a frontend framework I've used occasionally in recent years for very small personal projects. I especially like how well it works for data visualization.",
+        "projects": [],
+        "experience": "1 year"
+    },
+    {
+        "name": "Elm",
+        "proficiency": 0.2,
+        "category": "Frontend",
+        "description": "Elm is a frontend language I've used a little bit. I like the functional programming paradigm it uses, but I haven't used it much in recent years. I would love to explore using it for a larger scale project in the future.",
+        "projects": [],
+        "experience": "1 year"
     }
 ]
