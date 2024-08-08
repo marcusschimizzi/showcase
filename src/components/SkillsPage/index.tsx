@@ -14,13 +14,13 @@ const StyledHeader = styled.h1`
 
 const SkillsPage = () => {
     return (
-        <StyledSkills className="py-40 text-center" id="skills">
+        <StyledSkills className="py-40 text-center max-w-full overflow-x-hidden" id="skills">
             <StyledHeader className="text-5xl">Skills</StyledHeader>
             <h3 className="GrayText px-2">
                 Circle size indicates relative proficiency. Click on any skill to learn more.
             </h3>
 
-            <div className="mx-auto h-[50vh] max-w-6xl mt-4 relative">
+            <div className="mx-auto h-[80vh] md:h-[60vh] max-w-6xl mt-4 relative">
                 <Bubbles renderOnlyInViewport={true} />
             </div>
         </StyledSkills>
