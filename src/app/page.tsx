@@ -7,7 +7,7 @@ import education from '@/data/education.json';
 
 const DynamicProjects = dynamic(() => import('@/components/Projects'), { ssr: false });
 const DynamicExperience = dynamic(() => import('@/components/Experience'), { ssr: false });
-// const DynamicSkills = dynamic(() => import('@/components/SkillsPage'), { ssr: false });
+const DynamicSkills = dynamic(() => import('@/components/SkillsPage'), { ssr: false });
 const DynamicContact = dynamic(() => import('@/components/Contact'), { ssr: false });
 const DynamicRecentProjects = dynamic(() => import('@/components/RecentProjects'), { ssr: false });
 const DynamicFooter = dynamic(() => import('@/components/Footer'), { ssr: false });
@@ -20,7 +20,7 @@ export default function Home() {
             <Blurb />
             <DynamicProjects />
             <DynamicExperience work={workExperience} education={education} />
-            {/* <DynamicSkills /> */}
+            <DynamicSkills />
             <DynamicContact />
             <DynamicRecentProjects />
             <DynamicFooter />

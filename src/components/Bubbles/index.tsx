@@ -1,7 +1,6 @@
 'use client';
 import { drag as d3Drag } from 'd3-drag';
 import {
-    Force,
     forceCenter,
     forceCollide,
     forceManyBody,
@@ -17,19 +16,19 @@ import { select } from 'd3-selection';
 import React, { MouseEvent, useCallback, useEffect, useRef, useState, ComponentType } from 'react';
 import { useSpring, animated, config } from 'react-spring';
 import skillsData from '@/data/skills.json';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTimes } from '@fortawesome/free-solid-svg-icons';
+import SidePanel from './side-panel';
 
-interface Skill {
+export interface Skill {
     name: string;
     category: string;
     proficiency: number;
     description?: string;
-    projects?: string[];
-    experience?: string;
+    projects?: Array<{ name: string; description?: string }>;
+    experience?: number;
+    relatedSkills?: string[];
 }
 
-interface Category {
+export interface Category {
     name: string;
     color: string;
 }
@@ -101,52 +100,6 @@ const Legend: ComponentType<LegendProps> = ({ categories, colorScale, selectedCa
                     ))}
                 </div>
             </div>
-        </div>
-    );
-};
-
-interface SidePanelProps {
-    skill: Skill | Category | null;
-    onClose: () => void;
-}
-
-const SidePanel: ComponentType<SidePanelProps> = ({ skill, onClose }) => {
-    if (!skill) {
-        return null;
-    }
-
-    function isSkill(skill: Skill | Category): skill is Skill {
-        return (skill as Skill).proficiency !== undefined;
-    }
-
-    return (
-        <div
-            className="bg-black bg-opacity-10 shadow h-full overflow-hidden"
-            style={{
-                borderColor: isSkill(skill) ? colorScale(skill.category) : 'transparent',
-                borderWidth: '2px',
-                borderStyle: 'solid',
-            }}
-        >
-            <div className="flex justify-between items-center p-4">
-                <h3 className="text-lg font-bold">{skill.name}</h3>
-                <button onClick={onClose} className="text-lg font-bold">
-                    <FontAwesomeIcon icon={faTimes} />
-                </button>
-            </div>
-            {isSkill(skill) && (
-                <div className="p-4">
-                    <p className="text-sm">{skill.description}</p>
-                    <ul className="list-disc list-inside">
-                        {skill.projects?.map((project) => (
-                            <li key={project} className="text-sm">
-                                {project}
-                            </li>
-                        ))}
-                    </ul>
-                    <p className="text-sm">{skill.experience}</p>
-                </div>
-            )}
         </div>
     );
 };
@@ -286,7 +239,7 @@ const AnimatedBubbles: ComponentType<AnimatedBubblesProps> = ({ renderOnlyInView
             {
                 root: null,
                 rootMargin: '0px',
-                threshold: 0.8,
+                threshold: 0.1,
             },
         );
 
@@ -446,16 +399,12 @@ const AnimatedBubbles: ComponentType<AnimatedBubblesProps> = ({ renderOnlyInView
         <>
             <div
                 ref={containerRef}
-                className={`relative ${selectedSkill ? 'w-full md:w-2/3' : 'w-full'} h-full bg-transparent`}
+                className={`relative ${
+                    selectedSkill ? 'w-full md:w-2/3' : 'w-full'
+                } h-full bg-transparent overflow-hidden`}
             >
                 {isInViewport && (
                     <>
-                        <Legend
-                            categories={categories}
-                            colorScale={colorScale}
-                            selectedCategories={selectedCategories}
-                            onCategoryClick={handleCategoryClick}
-                        />
                         <svg className="w-full h-full">
                             <>
                                 <g>
@@ -485,13 +434,15 @@ const AnimatedBubbles: ComponentType<AnimatedBubblesProps> = ({ renderOnlyInView
                     </>
                 )}
             </div>
-            <div
-                className={`${
-                    selectedSkill ? 'w-full md:w-1/3' : 'w-0'
-                } transition-all bg-black bg-opacity-95 md:bg-opacity-10 absolute top-0 right-0 h-full overflow-y-auto rounded-lg shadow`}
-            >
-                <SidePanel skill={selectedSkill} onClose={() => setSelectedSkill(null)} />
-            </div>
+            <SidePanel skill={selectedSkill} onClose={() => setSelectedSkill(null)} />
+            {isInViewport && (
+                <Legend
+                    categories={categories}
+                    colorScale={colorScale}
+                    selectedCategories={selectedCategories}
+                    onCategoryClick={handleCategoryClick}
+                />
+            )}
         </>
     );
 };
