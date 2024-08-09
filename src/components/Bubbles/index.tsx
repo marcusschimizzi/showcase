@@ -26,6 +26,7 @@ export interface Skill {
     projects?: Array<{ name: string; description?: string }>;
     experience?: number;
     relatedSkills?: string[];
+    logo?: string;
 }
 
 export interface Category {
@@ -191,9 +192,23 @@ const Bubble = ({ node, simulation, onHover, onSkillClick, isHovered, isActive, 
             ref={nodeRef}
         >
             <circle r={node.radius} fill={colorScale(node.category)} className="cursor-grab" />
-            <text textAnchor="middle" dy=".3em" fontSize={node.radius / 3} fill="white" pointerEvents="none">
-                {node.name}
-            </text>
+            {node.logo ? (
+                <>
+                    <image
+                        href={`images/skills/${node.logo}`}
+                        width={node.radius * 1.4}
+                        height={node.radius * 1.4}
+                        x={-node.radius * 0.7}
+                        y={-node.radius * 0.7}
+                        preserveAspectRatio="xMidYMid meet"
+                    />
+                    <title>{node.name}</title>
+                </>
+            ) : (
+                <text textAnchor="middle" dy=".3em" fontSize={node.radius / 3} fill="white" pointerEvents="none">
+                    {node.name}
+                </text>
+            )}
         </animated.g>
     );
 };
