@@ -4,17 +4,19 @@ import { ComponentType } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBriefcase, faCalendar, faStar, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { useTheme } from 'styled-components';
+import Image from 'next/image';
 
 interface SidePanelProps {
     skill: Skill | Category | null;
     onClose: () => void;
+    colorScale: (category: string) => string;
 }
 
 function isSkill(skill: Skill | Category): skill is Skill {
     return (skill as Skill).proficiency !== undefined;
 }
 
-const SidePanel: ComponentType<SidePanelProps> = ({ skill, onClose }) => {
+const SidePanel: ComponentType<SidePanelProps> = ({ skill, onClose, colorScale }) => {
     const theme = useTheme();
 
     if (!skill || !isSkill(skill)) {
@@ -40,8 +42,40 @@ const SidePanel: ComponentType<SidePanelProps> = ({ skill, onClose }) => {
                             <FontAwesomeIcon icon={faTimes} />
                         </button>
 
-                        <h2 className="text-3xl font-bold mb-2">{skill.name}</h2>
-                        <p className="text-gray-400">{skill.category}</p>
+                        <div className="flex items-center mb-6">
+                            <motion.div
+                                initial={{ scale: 0.8, opacity: 0 }}
+                                animate={{ scale: 1, opacity: 1 }}
+                                transition={{ delay: 0.2, duration: 0.3 }}
+                            >
+                                {skill.logo ? (
+                                    <Image
+                                        src={`/images/skills/${skill.logo}`}
+                                        alt={`${skill.name} logo`}
+                                        className="mr-4 object-contain"
+                                        width={64}
+                                        height={64}
+                                    />
+                                ) : (
+                                    <div className="w-16 h-16 bg-primary-800 rounded-full relative">
+                                        <p className="text-3xl font-bold absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
+                                            {skill.name.charAt(0)}
+                                        </p>
+                                    </div>
+                                )}
+                            </motion.div>
+                            <div className="ml-2 text-left">
+                                <h2 className="text-3xl font-bold mb-2">{skill.name}</h2>
+                                <div
+                                    style={{
+                                        backgroundColor: skill.category ? colorScale(skill.category) : 'none',
+                                    }}
+                                    className="inline-block px-2 py-1 rounded-md"
+                                >
+                                    <p className="text-gray-950">{skill.category}</p>
+                                </div>
+                            </div>
+                        </div>
 
                         <div className="mb-6 text-left">
                             <h3 className="text-xl font-semibold mb-2">Proficiency</h3>
@@ -73,12 +107,12 @@ const SidePanel: ComponentType<SidePanelProps> = ({ skill, onClose }) => {
                                 <h3 className="text-xl font-semibold mb-2">Projects</h3>
                                 <ul className="space-y-4">
                                     {skill.projects?.map((project, i) => (
-                                        <li key={i} className="bg-gray-300 dark:bg-gray-950 p-4 rounded-lg">
+                                        <li key={i} className="bg-gray-100 dark:bg-gray-950 p-4 rounded-lg shadow-md">
                                             <h4 className="font-semibold mb-1 flex items-center">
                                                 <FontAwesomeIcon icon={faBriefcase} className="mr-2" />
                                                 {project.name}
                                             </h4>
-                                            <p className="text-gray-300">{project.description}</p>
+                                            <p className="text-gray-950 dark:text-gray-100">{project.description}</p>
                                         </li>
                                     ))}
                                 </ul>
@@ -92,7 +126,7 @@ const SidePanel: ComponentType<SidePanelProps> = ({ skill, onClose }) => {
                                     {skill.relatedSkills?.map((relatedSkill, index) => (
                                         <span
                                             key={index}
-                                            className="bg-gray-300 dark:bg-gray-950 text-gray-300 px-2 py-1 rounded-full"
+                                            className="bg-gray-100 dark:bg-gray-950 text-gray-950 dark:text-gray-100 px-3 py-2 rounded-full shadow-md"
                                         >
                                             {relatedSkill}
                                         </span>
