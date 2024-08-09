@@ -6,10 +6,11 @@ import { useTheme } from 'styled-components';
 import dynamic from 'next/dynamic';
 import Epithets from '../Epithets';
 import epithets from '@/data/epithets.json';
+import { colors as themeColors } from '@/utils/theme';
 
 const DynamicBlobs = dynamic(() => import('../Blobs'), {
     ssr: false,
-    loading: () => <div className="w-full h-full bg-black" />,
+    loading: () => <div className="w-full h-full bg-gray-950" />,
 });
 
 export default function Hero() {
@@ -43,7 +44,9 @@ export default function Hero() {
         return parseInt(str.replace(/^#/, ''), 16);
     }
 
-    const colorsAsNumbers = [colors.main1, colors.main2, colors.main3].map((color) => convertToNumber(color));
+    const colorsAsNumbers = [themeColors.primary[800], themeColors.secondary[800], themeColors.tertiary[800]].map(
+        (color) => convertToNumber(color),
+    );
 
     return (
         <section className={`min-h-screen items-stretch flex flex-col justify-between bg-[${colors.background1}]`}>

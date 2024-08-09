@@ -11,7 +11,8 @@
             }
         ],
         "experience": 4,
-        "relatedSkills": ["Next.js"]
+        "relatedSkills": ["Next.js"],
+        "logo": "react.svg"
     },
     {
         "name": "Next.js",
@@ -25,7 +26,8 @@
             }
         ],
         "experience": 2,
-        "relatedSkills": ["React"]
+        "relatedSkills": ["React"],
+        "logo": "nextjs.svg"
     },
     {
         "name": "Node.js",
@@ -39,7 +41,8 @@
             }
         ],
         "experience": 4,
-        "relatedSkills": ["Express"]
+        "relatedSkills": ["Express"],
+        "logo": "node.svg"
     },
     {
         "name": "MongoDB",
@@ -53,7 +56,8 @@
             }
         ],
         "experience": 3,
-        "relatedSkills": ["Express"]
+        "relatedSkills": ["Express"],
+        "logo": "mongodb.svg"
     },
     {
         "name": "Express",
@@ -67,7 +71,8 @@
             }
         ],
         "experience": 4,
-        "relatedSkills": ["Node.js"]
+        "relatedSkills": ["Node.js"],
+        "logo": "express.svg"
     },
     {
         "name": "JavaScript",
@@ -75,7 +80,8 @@
         "category": "Languages",
         "description": "JavaScript is the language I've used the most. I have experience with both ES5 and ES6, as well as TypeScript. I've used it to build frontend and backend applications.",
         "experience": 6,
-        "relatedSkills": ["TypeScript", "React", "Node.js"]
+        "relatedSkills": ["TypeScript", "React", "Node.js"],
+        "logo": "javascript.svg"
     },
     {
         "name": "TypeScript",
@@ -83,7 +89,8 @@
         "category": "Languages",
         "description": "TypeScript is the language I've used the most in the last few years. I have experience with both frontend and backend applications.",
         "experience": 4,
-        "relatedSkills": ["JavaScript"]
+        "relatedSkills": ["JavaScript"],
+        "logo": "typescript.svg"
     },
     {
         "name": "Golang",
@@ -96,7 +103,8 @@
                 "description": "While at Qualtrics, I built and maintained a service that acted as a registry for components used in the platform."
             }
         ],
-        "experience": 1
+        "experience": 1,
+        "logo": "go.svg"
     },
     {
         "name": "Python",
@@ -113,7 +121,8 @@
                 "description": "I recently built a text analysis service in Python."
             }
         ],
-        "experience": 3
+        "experience": 3,
+        "logo": "python.svg"
     },
     {
         "name": "Docker",
@@ -130,7 +139,8 @@
                 "description": "Most projects I worked on while at Qualtrics used Docker for deployment"
             }
         ],
-        "experience": 2
+        "experience": 2,
+        "logo": "docker.svg"
     },
     {
         "name": "Git",
@@ -143,14 +153,16 @@
                 "description": "I've used Git for basically every software project I've worked on."
             }
         ],
-        "experience": 6
+        "experience": 6,
+        "logo": "git.svg"
     },
     {
         "name": "Jest",
         "proficiency": 0.6,
         "category": "Testing",
         "description": "Jest is the testing framework I've used the most for recent projects. I have experience writing unit tests and integration tests with it.",
-        "experience": 4
+        "experience": 4,
+        "logo": "jest.svg"
     },
     {
         "name": "Vue",
@@ -166,7 +178,8 @@
                 "name": "A small website for a dog breeder"
             }
         ],
-        "experience": 3
+        "experience": 3,
+        "logo": "vue.svg"
     },
     {
         "name": "D3.js",
@@ -183,34 +196,39 @@
                 "description": "This skill visualization was built in part with DQ."
             }
         ],
-        "experience": 4.5
+        "experience": 4.5,
+        "logo": "d3.svg"
     },
     {
-        "name": "SQL",
+        "name": "PostgreSQL",
         "proficiency": 0.4,
         "category": "Databases",
-        "description": "I've used SQL for a few projects when they've called for relational databases. I have experience writing queries and building schemas, mostly used with Postgres.",
-        "experience": 2
+        "description": "I've used SQL for a few projects when they've called for relational databases. I have experience writing queries and building schemas.",
+        "experience": 2,
+        "logo": "postgresql.svg"
     },
     {
         "name": "Rust",
         "proficiency": 0.2,
         "category": "Languages",
         "description": "Rust is a language I haven't used much, but I've been learning it in my free time. I hope to use it for a project in the near future.",
-        "experience": 1
+        "experience": 1,
+        "logo": "rust.svg"
     },
     {
         "name": "Svelte",
         "proficiency": 0.3,
         "category": "Frontend",
         "description": "Svelte is a frontend framework I've used occasionally in recent years for very small personal projects. I especially like how well it works for data visualization.",
-        "experience": 1
+        "experience": 1,
+        "logo": "svelte.svg"
     },
     {
         "name": "Elm",
         "proficiency": 0.2,
         "category": "Frontend",
         "description": "Elm is a frontend language I've used a little bit. I like the functional programming paradigm it uses, but I haven't used it much in recent years. I would love to explore using it for a larger scale project in the future.",
-        "experience": 1
+        "experience": 1,
+        "logo": "elm.svg"
     }
 ]
