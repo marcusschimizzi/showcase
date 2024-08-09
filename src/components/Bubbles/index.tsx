@@ -14,7 +14,7 @@ import { scaleOrdinal } from 'd3-scale';
 import { schemeSet2 } from 'd3-scale-chromatic';
 import { select } from 'd3-selection';
 import React, { MouseEvent, useCallback, useEffect, useRef, useState, ComponentType } from 'react';
-import { useSpring, animated, config } from 'react-spring';
+import { useSpring, animated, config } from '@react-spring/web';
 import skillsData from '@/data/skills.json';
 import SidePanel from './side-panel';
 

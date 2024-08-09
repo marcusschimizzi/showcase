@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useSpring, animated } from 'react-spring';
+import { useSpring, animated } from '@react-spring/web';
 import { useTheme } from 'styled-components';
 import { area, curveBasis } from 'd3-shape';
 import styled from 'styled-components';
