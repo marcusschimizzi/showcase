@@ -389,6 +389,10 @@ const AnimatedBubbles: ComponentType<AnimatedBubblesProps> = ({ renderOnlyInView
         setSelectedSkill(node);
     };
 
+    const resetSelectedCategories = useCallback(() => {
+        setSelectedCategories(new Set());
+    }, []);
+
     const handleCategoryClick = useCallback((category: string) => {
         setSelectedSkill(null);
         setSelectedCategories((prev) => {
@@ -449,14 +453,24 @@ const AnimatedBubbles: ComponentType<AnimatedBubblesProps> = ({ renderOnlyInView
                     </>
                 )}
             </div>
-            <SidePanel skill={selectedSkill} onClose={() => setSelectedSkill(null)} />
+            <SidePanel skill={selectedSkill} onClose={() => setSelectedSkill(null)} colorScale={colorScale} />
             {isInViewport && (
-                <Legend
-                    categories={categories}
-                    colorScale={colorScale}
-                    selectedCategories={selectedCategories}
-                    onCategoryClick={handleCategoryClick}
-                />
+                <>
+                    <Legend
+                        categories={categories}
+                        colorScale={colorScale}
+                        selectedCategories={selectedCategories}
+                        onCategoryClick={handleCategoryClick}
+                    />
+                    {selectedCategories.size > 0 && (
+                        <button
+                            onClick={resetSelectedCategories}
+                            className="absolute top-0 right-0 bg-primary-950 text-primary-200 dark:bg-primary-200 dark:text-primary-950 p-2 rounded hover:bg-primary-900 dark:hover:bg-primary-100 transition-colors duration-200"
+                        >
+                            Reset selected
+                        </button>
+                    )}
+                </>
             )}
         </>
     );

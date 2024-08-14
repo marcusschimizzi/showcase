@@ -41,6 +41,14 @@ export default function ThemeProvider({ children }: { children: ReactNode }) {
         setTheme(themeToUse);
     }, []);
 
+    useEffect(() => {
+        if (theme.name === 'light') {
+            document.documentElement.classList.remove('dark');
+        } else {
+            document.documentElement.classList.add('dark');
+        }
+    }, [theme]);
+
     return (
         <ThemeContext.Provider value={{ theme, toggleTheme }}>
             <StyledThemeProvider theme={theme}>
