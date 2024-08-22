@@ -1,5 +1,21 @@
 [
     {
+        "title": "Mock My Draft",
+        "description": "A web app that archives, analyzes, and presents grades for historical NFL drafts.",
+        "thumbnail": "/images/mmd.png",
+        "demo": "/images/mmd.webm",
+        "link": "https://mockmydraft.com/",
+        "featured": true
+    },
+    {
+        "title": "My portfolio",
+        "description": "The website you're currently on.",
+        "thumbnail": "/images/portfolio.png",
+        "demo": "/images/portfolio.webm",
+        "link": "/",
+        "featured": true
+    },
+    {
         "title": "Polititrack",
         "description": "A web app that tracked polling and candidate movements for the 2020 presidential election.",
         "thumbnail": "/images/polititrack.jpg",
@@ -21,14 +37,6 @@
         "thumbnail": "/images/perception.jpg",
         "demo": "/images/perception.webm",
         "link": "https://perception.net",
-        "featured": true
-    },
-    {
-        "title": "Mock My Draft",
-        "description": "A web app that archives, analyzes, and presents grades for historical NFL drafts.",
-        "thumbnail": "/images/mmd.png",
-        "demo": "/images/mmd.webm",
-        "link": "https://mockmydraft.com/",
         "featured": true
     },
     {
