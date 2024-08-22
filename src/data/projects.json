@@ -24,6 +24,14 @@
         "featured": true
     },
     {
+        "title": "Mock My Draft",
+        "description": "A web app that archives, analyzes, and presents grades for historical NFL drafts.",
+        "thumbnail": "/images/mmd.png",
+        "demo": "/images/mmd.webm",
+        "link": "https://mockmydraft.com/",
+        "featured": true
+    },
+    {
         "title": "Quick Trigger Kennels",
         "description": "A homepage for a dog breeding business.",
         "thumbnail": "/images/qtk.jpg",
