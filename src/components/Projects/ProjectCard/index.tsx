@@ -44,6 +44,7 @@ const StyledCardTitle = styled.h2`
 
 const StyledCardDescription = styled.p`
     color: ${({ theme }) => theme.colors.text2};
+    min-height: 3.75rem;
 `;
 
 export default function ProjectCard({ demo, link, thumbnail, title, description }: ProjectCardProps) {
