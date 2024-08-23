@@ -2,61 +2,68 @@
 
 import Image from 'next/image';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faHeart, faCoffee, faCopyright } from '@fortawesome/free-solid-svg-icons';
+import { faHeart, faCoffee } from '@fortawesome/free-solid-svg-icons';
 import { motion } from 'framer-motion';
 import styled from 'styled-components';
 import SocialMedia from '../SocialMedia';
 import LinesAnimation from '../LinesAnimation';
+import Link from 'next/link';
 
-const StyledFooter = styled.footer`
-    background-color: ${({ theme }) => theme.colors.background1};
-    color: ${({ theme }) => theme.colors.text1};
-`;
 
 export default function Footer() {
+    const currentYear = new Date().getFullYear();
+    
     return (
-        <StyledFooter className="pt-12 pw-6 pb-24 text-center relative">
-            <LinesAnimation />
-            <motion.div
-                className="mx-auto relative w-auto"
-                initial={{ opacity: 0, y: 100 }}
-                whileInView={{ opacity: 1, y: 0, transition: { duration: 1, mass: 1.5, stiffness: 200 } }}
-                viewport={{ once: true, amount: 0.3 }}
-            >
-                <a href="/">
-                    <figure className="inline-block h-12 w-12 relative">
-                        <Image
-                            className="block h-auto w-full"
-                            src="/images/logo-gradient.svg"
-                            alt="m logo"
-                            width={12}
-                            height={12}
-                        />
-                    </figure>
-                </a>
-                <div className="md:flex justify-center -mw-3 mt-2">
-                    <div className="block p-3 md:w-1/3">
-                        <h1 className="text-xl lg:text-3xl font-semibold">Marcus J. Schimizzi</h1>
+        <footer className='bg-gray-50 text-gray-950 dark:bg-gray-950 dark:text-gray-50'>
+            <div className='max-w-6xl mx-auto px-4 py-10 sm:px-6 lg:px-8'>
+                <div className='grid grid-cols-1 md:grid-cols-3 gap-8'>
+                    <div>
+<a href="/">
+<figure className="inline-block h-12 w-12 relative">
+ <Image
+className="block h-auto w-full"
+ src="/images/logo-gradient.svg"
+alt="m logo"
+width={12}
+height={12}
+/>
+</figure>
+</a>
+                        <h3 className='text-lg font-semibold mt-2'>Marcus J. Schimizzi</h3>
+                        <p className='text-gray-700 dark:text-gray-300'>I&apos;m a passionate software engineer specializing in web development and data visualization.</p>
+                    </div>
+
+                    <div>
+                        <h3 className='text-lg font-semibold'>Quick Links</h3>
+                        <ul className="space-y-2">
+                            {['Home', 'About', 'Projects', 'Contact'].map((link) => (
+                                <li key={link}>
+                                    <Link href={`/${link.toLowerCase()}`} className='text-gray-700 dark:text-gray-300 hover:text-gray-950 dark:hover:text-gray-50 transition-colors'>
+                                       {link}
+                                    </Link>
+                                </li>
+                            ))}
+                        </ul>
+                    </div>
+
+                    <div>
+                        <h3 className='text-lg font-semibold'>Connect</h3>
+                        <div className='mt-2'>
+
+                        <SocialMedia align='left' />
+                        </div>
                     </div>
                 </div>
-                <div className="mt-3">
-                    <SocialMedia align="center" />
+
+                <div className='mt-8 pt-8 border-t border-gray-300 dark:border-gray-700 text-center text-gray-700 dark:text-gray-300'>
+                <p>
+       Made by me with <FontAwesomeIcon className="text-[#b51442] align-middle" icon={faHeart} />
+
+{" "}and lots of <FontAwesomeIcon className="text-[saddlebrown] align-middle" icon={faCoffee} />
+</p>
+                            <p className='mt-2'>&copy; {currentYear} Marcus Schimizzi. All rights reserved.</p>
                 </div>
-                <div className="mt-3">
-                    <p>
-                        Made by me with <FontAwesomeIcon className="text-[#b51442] align-middle" icon={faHeart} />
-                    </p>
-                    <p>
-                        and lots of <FontAwesomeIcon className="text-[saddlebrown] align-middle" icon={faCoffee} />
-                    </p>
-                    <p>
-                        <span>
-                            <FontAwesomeIcon icon={faCopyright} className="align-middle" />
-                        </span>
-                        <span> 2023</span>
-                    </p>
-                </div>
-            </motion.div>
-        </StyledFooter>
+            </div>
+        </footer>
     );
 }
