@@ -24,6 +24,10 @@ const StyledMail = styled.a`
     &:hover {
         color: ${({ theme }) => theme.colors.main2};
     }
+
+    b {
+	    display: none;
+    }
 `;
 
 export default function Contact() {
@@ -39,8 +43,8 @@ export default function Contact() {
                 <br />
                 <h1>
                     Drop me a line at{' '}
-                    <StyledMail href="mailto:hello@schimizzi.io" className="hover:underline">
-                        hello@schimizzi.io
+                    <StyledMail href="mailto:%6d%61%72%63%75%73%40%73%63%68%69%6d%69%7a%7a%69%2e%69%6f" className="hover:underline">
+                        marcus [at] <b>izzimihcs</b> schimizzi <b>izzimihcs</b> [dot] io
                     </StyledMail>
                 </h1>
             </motion.div>
