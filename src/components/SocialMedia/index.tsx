@@ -61,7 +61,7 @@ export default function SocialMedia({ align }: SocialMediaProps) {
             <StyledLink id="github" href="https://github.com/schimizzimj" target="_blank" $align={align}>
                 <StyledGithubIcon className="icon items-center inline-flex justify-center h-6 w-6" icon={faGithub} />
             </StyledLink>
-            <StyledLink id="email" href="mailto:marcus@schimizzi.io" target="_blank" $align={align}>
+            <StyledLink id="email" href="mailto:%6d%61%72%63%75%73%40%73%63%68%69%6d%69%7a%7a%69%2e%69%6f" target="_blank" $align={align}>
                 <StyledEmailIcon className="icon items-center inline-flex justify-center h-6 w-6" icon={faEnvelope} />
             </StyledLink>
         </div>
