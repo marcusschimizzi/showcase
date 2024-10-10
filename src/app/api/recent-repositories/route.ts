@@ -140,7 +140,7 @@ export async function GET() {
 
     let response = await client.query<ResponseData>({
         query: GET_REPOSITORY_CONTRIBUTIONS,
-        variables: { username: 'schimizzimj', since: oneMonthAgo.toISOString(), cursor: null },
+        variables: { username: 'marcusschimizzi', since: oneMonthAgo.toISOString(), cursor: null },
     });
 
     function processNodes(repos: RawRepository[]): Repository[] {
@@ -170,7 +170,7 @@ export async function GET() {
     while (cursor) {
         response = await client.query<ResponseData>({
             query: GET_REPOSITORY_CONTRIBUTIONS,
-            variables: { username: 'schimizzimj', since: twoWeeksAgo.toISOString(), cursor },
+            variables: { username: 'marcusschimizzi', since: twoWeeksAgo.toISOString(), cursor },
         });
 
         repos = [...repos, ...processNodes(response.data.user.repositories.nodes)];
