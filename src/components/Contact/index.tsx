@@ -3,6 +3,7 @@
 import { motion } from 'framer-motion';
 import styled from 'styled-components';
 import { rgba } from 'polished';
+import ContactForm from './ContactForm';
 
 const StyledContact = styled.section`
     background: ${({ theme }) =>
@@ -26,7 +27,7 @@ const StyledMail = styled.a`
     }
 
     b {
-	    display: none;
+        display: none;
     }
 `;
 
@@ -39,14 +40,14 @@ export default function Contact() {
                 initial={{ opacity: 0, y: 100 }}
                 viewport={{ once: true, amount: 0.3 }}
             >
-                <h1>Want to get in touch?</h1>
+                <h1 className="text-4xl mb-5">Want to get in touch?</h1>
+                <p className="text-lg mb-5 text-balance">
+                    Feel free to fill out the form below if there&#39;s something you&#39;d like to chat about or even
+                    if you&#39;d just like to say hi! 👋
+                </p>
+                <p className="text-lg mb-5 text-balance">(No solicitations, please.)</p>
                 <br />
-                <h1>
-                    Drop me a line at{' '}
-                    <StyledMail href="mailto:%6d%61%72%63%75%73%40%73%63%68%69%6d%69%7a%7a%69%2e%69%6f" className="hover:underline">
-                        marcus [at] <b>izzimihcs</b> schimizzi <b>izzimihcs</b> [dot] io
-                    </StyledMail>
-                </h1>
+                <ContactForm />
             </motion.div>
         </StyledContact>
     );
