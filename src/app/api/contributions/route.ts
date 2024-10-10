@@ -53,7 +53,7 @@ export async function GET() {
 
     const response = await client.query<ResponseData>({
         query: GET_GIT_ACTIVITY,
-        variables: { username: 'schimizzimj' },
+        variables: { username: 'marcusschimizzi' },
     });
 
     if (response.errors) {
