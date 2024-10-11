@@ -86,7 +86,7 @@ export default function Projects({}) {
             </motion.ul>
             <div className="pt-12 flex justify-center">
                 <div className="max-w-fit">
-                    <StyledViewMore href="https://github.com/schimizzimj" target="_blank" className="group">
+                    <StyledViewMore href="https://github.com/marcusschimizzi" target="_blank" className="group">
                         <h2 className="text-xl md:text-3xl font-sans font-semibold">
                             View More <FontAwesomeIcon icon={faArrowUpRightFromSquare} />
                         </h2>
