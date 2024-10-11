@@ -11,7 +11,6 @@ import {
     SimulationNodeDatum,
 } from 'd3-force';
 import { scaleOrdinal } from 'd3-scale';
-import { schemeSet2 } from 'd3-scale-chromatic';
 import { select } from 'd3-selection';
 import React, { MouseEvent, useCallback, useEffect, useRef, useState, ComponentType } from 'react';
 import { useSpring, animated, config } from '@react-spring/web';
@@ -35,10 +34,11 @@ export interface Category {
 }
 
 const skills: Skill[] = skillsData;
+const themedColors: string[] = ['#1F5ABD', '#8910A8', '#48C774', '#FF6B6B', '#FFA600', '#4ECDC4', '#F7FFF7', '#FF8C42'];
 
 const colorScale = scaleOrdinal<string>()
     .domain(skills.map((skill) => skill.category))
-    .range(schemeSet2);
+    .range(themedColors);
 
 interface Node extends Skill {
     radius: number;
