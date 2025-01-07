@@ -80,34 +80,12 @@ export default function Blurb() {
                     <StyledHeading>Who am I?</StyledHeading>
                     <StyledParagraph>Hi there! My name is Marcus.</StyledParagraph>
                     <StyledParagraph>
-                        I&apos;m a software engineer with a passion for building clean, intuitive interfaces and
-                        bringing data to life through compelling visualizations.
+                        I&apos;m currently employed as a software engineer at Qualia working to make real estate
+                        transactions easier and more efficient.
                     </StyledParagraph>
                     <StyledParagraph>
-                        My journey in tech has been driven by a love for problem-solving and a keen eye for detail. I
-                        specialize in crafting seamless user experiences using React and TypeScript (plus some Vue and
-                        Svelte), always striving to write code that&apos;s not just functional, but elegant and
-                        maintainable. Whether it&apos;s a complex web application or a sleek mobile interface, I thrive
-                        on the challenge of creating software that&apos;s both powerful and user-friendly.
-                    </StyledParagraph>
-                    <StyledParagraph>
-                        One area that really gets me excited is data visualization. I believe that data has stories to
-                        tell, and I&apos;m passionate about finding innovative ways to uncover and share those stories.
-                        From interactive charts that make complex information accessible, to performance-optimized
-                        dashboards that handle large datasets with ease, I love using my skills to help people
-                        understand and interact with data in meaningful ways.
-                    </StyledParagraph>
-                    <StyledParagraph>
-                        When I&apos;m not immersed in code or exploring datasets, you can find me with my nose in a
-                        book, cheering on my beloved Pittsburgh sports teams (go Steelers!), or planning my next travel
-                        adventure. I believe that these diverse interests fuel my creativity and bring fresh
-                        perspectives to my work.
-                    </StyledParagraph>
-                    <StyledParagraph>
-                        I&apos;m always eager to take on new challenges and collaborate on exciting projects. If
-                        you&apos;re looking for a software engineer who combines technical expertise with creativity and
-                        a user-centered approach, I&apos;d love to chat about how we can work together to bring your
-                        ideas to life.
+                        Outside of building software, I love to spend time traveling, reading (mostly nonfiction and
+                        biographies), worrying too much about my favorite sports teams, and cooking.
                     </StyledParagraph>
                 </motion.div>
             </motion.div>
