@@ -2,6 +2,14 @@
     "title": "Experience",
     "roles": [
         {
+            "institution": "Qualia",
+            "role": "Software Engineer",
+            "startDate": "December 2024",
+            "endDate": "Now",
+            "description": "I work on the Connect team, making it easier for agents, buyers, and sellers to communicate during the home buying process.",
+            "image": "/images/qualia.png"
+        },
+        {
             "institution": "Qualtrics",
             "role": "Software Development Engineer",
             "startDate": "August 2019",
