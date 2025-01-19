@@ -9,7 +9,6 @@ const DynamicProjects = dynamic(() => import('@/components/Projects'), { ssr: fa
 const DynamicExperience = dynamic(() => import('@/components/Experience'), { ssr: false });
 const DynamicSkills = dynamic(() => import('@/components/SkillsPage'), { ssr: false });
 const DynamicContact = dynamic(() => import('@/components/Contact'), { ssr: false });
-const DynamicRecentProjects = dynamic(() => import('@/components/RecentProjects'), { ssr: false });
 const DynamicFooter = dynamic(() => import('@/components/Footer'), { ssr: false });
 
 export default function Home() {
@@ -22,7 +21,6 @@ export default function Home() {
             <DynamicExperience work={workExperience} education={education} />
             <DynamicSkills />
             <DynamicContact />
-            <DynamicRecentProjects />
             <DynamicFooter />
         </>
     );

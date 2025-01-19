@@ -41,8 +41,6 @@ interface Contributions {
 }
 
 export async function GET() {
-    console.log(process.env.GITHUB_TOKEN);
-
     const client = new ApolloClient({
         uri: 'https://api.github.com/graphql',
         headers: {
